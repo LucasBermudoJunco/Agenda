@@ -10,4 +10,6 @@ public class Hora {
 
 /// Constructor(es)
     public Hora(){}
+
+    public Hora(int codigoHora){}
 }
