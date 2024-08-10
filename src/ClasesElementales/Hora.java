@@ -11,5 +11,7 @@ public class Hora {
 /// Constructor(es)
     public Hora(){}
 
-    public Hora(int codigoHora){}
+    public Hora(int codigoHora){
+        this.codigoHora = codigoHora;
+    }
 }
