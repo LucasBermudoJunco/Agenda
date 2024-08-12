@@ -19,6 +19,11 @@ public class Tarea {
         this.contenidoTarea = contenidoTarea;
     }
 
+    public Tarea(String contenidoTarea, int codigoHora){
+        this.contenidoTarea = contenidoTarea;
+        this.codigoHora = codigoHora;
+    }
+
     public Tarea(int codigoTarea, int codigoHora, String contenidoTarea){
         this.codigoTarea = codigoTarea;
         this.codigoHora = codigoHora;
@@ -30,6 +35,10 @@ public class Tarea {
         return codigoTarea;
     }
 
+    public void setCodigoTarea(int codigoTarea) {
+        this.codigoTarea = codigoTarea;
+    }
+
     public int getCodigoHora() {
         return codigoHora;
     }
@@ -37,4 +46,5 @@ public class Tarea {
     public String getContenidoTarea() {
         return contenidoTarea;
     }
+
 }

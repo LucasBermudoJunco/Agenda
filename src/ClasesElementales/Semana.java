@@ -3,8 +3,9 @@ package ClasesElementales;
 import DAO.HoraDAO;
 import DAO.TareaDAO;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class Semana {
 
@@ -46,4 +47,74 @@ public class Semana {
         return tareaDAO.read(codigoTarea);
     }
 
+    public int obtenerCodigoTareaAleatorio() {
+        Random random = new Random();
+        int codigoAleatorioTarea;
+
+        do{
+            codigoAleatorioTarea = random.nextInt(99999) + 1;
+        } while(!tareaDAO.estaLibreEsteCodigoTarea(codigoAleatorioTarea));
+
+        return codigoAleatorioTarea;
+    }
+
+    public void crearTareaYActualizarHora(Tarea tarea){
+        tarea.setCodigoTarea(obtenerCodigoTareaAleatorio());
+        tareaDAO.create(tarea);
+
+        horas = horaDAO.obtenerHoras();
+        Iterator<Hora> horasIterator = horas.iterator();
+        while(horasIterator.hasNext()){
+            Hora hora = horasIterator.next();
+
+            if(hora.getCodigoHora() == tarea.getCodigoHora()){
+                hora.setCodigoTarea(tarea.getCodigoTarea());
+
+                horaDAO.update(hora.getCodigoHora(), hora.getCodigoTarea());
+            }
+        }
+    }
+
+    public void cambiarTareaYActualizarHora(Hora hora, Tarea tareaNueva) {
+        tareaNueva.setCodigoTarea(obtenerCodigoTareaAleatorio());
+        boolean tareaUHoraYaEncontrada = false;
+
+        // Borrar la tarea antigua
+        List<Tarea> tareas = tareaDAO.obtenerTareas();
+        Iterator<Tarea> tareasIterator = tareas.iterator();
+        while (tareasIterator.hasNext() && !tareaUHoraYaEncontrada){
+            Tarea estaTarea = tareasIterator.next();
+
+            if(estaTarea.getCodigoTarea() == hora.getCodigoTarea()){
+                tareaUHoraYaEncontrada = true;
+
+                tareasIterator.remove();
+
+                tareaDAO.delete(estaTarea.getCodigoTarea());
+            }
+        }
+
+        // Crear la tarea nueva
+        tareaDAO.create(tareaNueva);
+
+        // Establecer la tarea nueva en la misma hora
+        tareaUHoraYaEncontrada = false;
+        horas = horaDAO.obtenerHoras();
+        Iterator<Hora> horasIterator = horas.iterator();
+        while(horasIterator.hasNext() && !tareaUHoraYaEncontrada){
+            Hora estaHora = horasIterator.next();
+
+            if(estaHora.getCodigoHora() == tareaNueva.getCodigoHora()){
+                tareaUHoraYaEncontrada = true;
+
+                estaHora.setCodigoTarea(tareaNueva.getCodigoTarea());
+
+                horaDAO.update(estaHora.getCodigoHora(), tareaNueva.getCodigoTarea());
+            }
+        }
+    }
+
+    public void eliminarTarea(int codigoTareaAEliminar) {
+        tareaDAO.delete(codigoTareaAEliminar);
+    }
 }

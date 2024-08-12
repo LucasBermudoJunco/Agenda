@@ -43,6 +43,19 @@ public class HoraDAO {
         return hora;
     }
 
+    public void update(int codigoHora,int codigoNuevoTarea){
+        try{
+            con = daoGeneral.connect();
+            sql = "update Hora set codigoTarea = ? where codigoHora = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codigoNuevoTarea);
+            ps.setInt(2, codigoHora);
+            ps.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 /// Método(s) específico(s)
     public List<Hora> obtenerHoras(){
         List<Hora> horas = new ArrayList<Hora>();
@@ -72,4 +85,16 @@ public class HoraDAO {
         return horas;
     }
 
+    public void eliminarSuTarea(int codigoHora) {
+        try{
+            con = daoGeneral.connect();
+            sql = "update Hora set codigoTarea = ? where codigoHora = ?";
+            ps = con.prepareStatement(sql);
+            ps.setNull(1, java.sql.Types.INTEGER);
+            ps.setInt(2, codigoHora);
+            ps.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

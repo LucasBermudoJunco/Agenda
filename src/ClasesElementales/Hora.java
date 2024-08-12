@@ -27,6 +27,10 @@ public class Hora {
         return codigoTarea;
     }
 
+    public void setCodigoTarea(int codigoTarea) {
+        this.codigoTarea = codigoTarea;
+    }
+
 /// Otros métodos predeterminados de la clase
     @Override
     public String toString(){
