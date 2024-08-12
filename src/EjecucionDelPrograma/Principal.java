@@ -113,7 +113,16 @@ public class Principal {
 
             // Consultar una tarea concreta
             } else if (opcion == 3) {
+                System.out.print("\nIntroduce el código de la tarea que desees consultar:  ");
+                int codigoTarea = sc.nextInt();
 
+                Tarea tarea = semana.obtenerTarea(codigoTarea);
+
+                if(tarea != null){
+                    System.out.println("\nInformación sobre la tarea:\n" + tarea + "\n\n");
+                } else{
+                    System.out.println("\nNo existe ninguna tarea con ese código.\n");
+                }
 
             // Consultar todas las tareas de todas las horas
             } else if (opcion == 4) {

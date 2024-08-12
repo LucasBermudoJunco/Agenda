@@ -47,4 +47,13 @@ public class Tarea {
         return contenidoTarea;
     }
 
+/// Otros métodos predeterminados de la clase
+
+
+    @Override
+    public String toString() {
+        return "Codigo de la tarea:  " + codigoTarea +
+               "\nHora:  " + codigoHora +
+               "\nContenido de la tarea:  ´´" + contenidoTarea + "``";
+    }
 }
