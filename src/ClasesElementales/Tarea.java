@@ -8,12 +8,15 @@ public class Tarea {
     private String contenidoTarea;
 
 /// Constructor(es)
+    @SuppressWarnings("unused")
     public Tarea() {}
 
+    @SuppressWarnings("unused")
     public Tarea(int codigoTarea){
         this.codigoTarea = codigoTarea;
     }
 
+    @SuppressWarnings("unused")
     public Tarea(int codigoTarea, String contenidoTarea){
         this.codigoTarea = codigoTarea;
         this.contenidoTarea = contenidoTarea;
@@ -48,8 +51,6 @@ public class Tarea {
     }
 
 /// Otros métodos predeterminados de la clase
-
-
     @Override
     public String toString() {
         return "Codigo de la tarea:  " + codigoTarea +
