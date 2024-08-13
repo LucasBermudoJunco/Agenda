@@ -3,6 +3,7 @@ package ClasesElementales;
 import DAO.HoraDAO;
 import DAO.TareaDAO;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -12,6 +13,7 @@ public class Semana {
 /// Atributo(s)
     private int codigoSemana;
     private List<Hora> horas;
+    private List<Tarea> tareas;
     TareaDAO tareaDAO = new TareaDAO();
     HoraDAO horaDAO = new HoraDAO();
 
@@ -34,9 +36,17 @@ public class Semana {
         return horas;
     }
 
-/// Método(s) específico(s)
+    public List<Tarea> getTareas() {
+        return tareas;
+    }
+
+    /// Método(s) específico(s)
     public void obtenerHorasDeLaBaseDeDatos() {
         horas = horaDAO.obtenerHoras();
+    }
+
+    public void obtenerTareasDeLaBaseDeDatos() {
+        tareas = tareaDAO.obtenerTareas();
     }
 
     public Hora obtenerHora(int codigoHora) {
@@ -116,5 +126,9 @@ public class Semana {
 
     public void eliminarTarea(int codigoTareaAEliminar) {
         tareaDAO.delete(codigoTareaAEliminar);
+    }
+
+    public void ordenarTareasPorHoras() {
+        Collections.sort(tareas);
     }
 }

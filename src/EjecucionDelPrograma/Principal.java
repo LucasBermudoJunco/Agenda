@@ -37,7 +37,7 @@ public class Principal {
                     "\n\t1 para añadir una tarea." +
                     "\n\t2 para consultar la tarea de una hora concreta." +
                     "\n\t3 para consultar una tarea concreta." +
-                    "\n\t4 para consultar todas las tareas de todas las horas." +
+                    "\n\t4 para consultar todas las tareas." +
                     "\n\t5 para eliminar una tarea." +
                     "\n\n\t0 para salir del programa." +
                     "\n\nOpción elegida:  ");
@@ -124,9 +124,25 @@ public class Principal {
                     System.out.println("\nNo existe ninguna tarea con ese código.\n");
                 }
 
-            // Consultar todas las tareas de todas las horas
+            // Consultar todas las tareas
             } else if (opcion == 4) {
+                semana.obtenerTareasDeLaBaseDeDatos();
+                List<Tarea> tareas = semana.getTareas();
 
+                if(!tareas.isEmpty()){
+                    semana.ordenarTareasPorHoras();
+
+                    System.out.println("\nLas tareas que existen en este momento son:\n");
+
+                    Iterator<Tarea> iterator = tareas.iterator();
+                    while(iterator.hasNext()){
+                        Tarea tarea = iterator.next();
+
+                        System.out.println(tarea + "\n");
+                    }
+                } else{
+                    System.out.println("\nNo hay ninguna tarea en este momento.\n");
+                }
 
             // Eliminar una tarea
             } else if(opcion == 5){

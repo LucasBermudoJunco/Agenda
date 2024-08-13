@@ -1,6 +1,8 @@
 package ClasesElementales;
 
-public class Tarea {
+import java.io.Serializable;
+
+public class Tarea implements Comparable<Tarea> {
 
 /// Atributo(s)
     private int codigoTarea;
@@ -57,4 +59,10 @@ public class Tarea {
                "\nHora:  " + codigoHora +
                "\nContenido de la tarea:  ´´" + contenidoTarea + "``";
     }
+
+    @Override
+    public int compareTo(Tarea tarea){
+        return this.codigoHora - tarea.codigoHora;
+    }
+
 }
