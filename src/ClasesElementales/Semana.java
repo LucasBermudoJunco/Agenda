@@ -128,6 +128,10 @@ public class Semana {
         tareaDAO.delete(codigoTareaAEliminar);
     }
 
+    public void eliminarLaTareaDeEstaHora(int codigoHora){
+        horaDAO.eliminarSuTarea(codigoHora);
+    }
+
     public void ordenarTareasPorHoras() {
         Collections.sort(tareas);
     }

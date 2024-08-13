@@ -52,36 +52,57 @@ public class Principal {
 
                 if(estaHora != null){
                     if(estaHora.getCodigoTarea() == null){
+                        String nuevaTarea = "";
+
                         System.out.print("\nIntroduce la nueva tarea:  ");
-                        String nuevaTarea = sc.nextLine();
 
-                        if(!nuevaTarea.isBlank()){
-                            Tarea tarea = new Tarea(nuevaTarea,horaDeLaTarea);
+                        do {
+                            nuevaTarea = sc.nextLine();
 
-                            semana.crearTareaYActualizarHora(tarea);
+                            if (!nuevaTarea.isBlank()) {
+                                Tarea tarea = new Tarea(nuevaTarea, horaDeLaTarea);
 
-                            System.out.println();
-                        } else{
-                            System.out.println("\nLa tarea no puede estar en blanco.\n");
-                        }
-                    } else{
-                        System.out.print("\nEsta hora ya tiene una tarea asignada. ¿Quieres sustituirla por una nueva tarea?  ");
-                        String sustituirONo = sc.nextLine();
+                                semana.crearTareaYActualizarHora(tarea);
 
-                        if(sustituirONo.equalsIgnoreCase("sí") || sustituirONo.equalsIgnoreCase("si")){
-                            System.out.print("\nIntroduce la nueva tarea:  ");
-                            String nuevaTarea = sc.nextLine();
-
-                            if(!nuevaTarea.isBlank()){
-                                Tarea tarea = new Tarea(nuevaTarea,horaDeLaTarea);
-
-                                semana.cambiarTareaYActualizarHora(estaHora,tarea);
-                            } else{
-                                System.out.println("\nLa tarea no puede estar en blanco.");
+                                System.out.println("\nLa tarea ha sido creada para la hora " + horaDeLaTarea + " con el código de tarea nº " + tarea.getCodigoTarea() + "\n");
+                            } else {
+                                System.out.print("\nLa tarea no puede estar en blanco. Vuelve a introducirla:  \n");
                             }
-                        } else{
-                            System.out.println("\nLa tarea de esta hora no ha sido sustituida.\n");
-                        }
+                        } while(nuevaTarea.isBlank());
+                    } else{
+                        String sustituirONo = "";
+
+                        System.out.print("\nEsta hora ya tiene una tarea asignada. ¿Quieres sustituirla por una nueva tarea?  ");
+
+                        do {
+                            sustituirONo = sc.nextLine();
+
+                            if (sustituirONo.equalsIgnoreCase("sí") || sustituirONo.equalsIgnoreCase("si")) {
+                                String nuevaTarea = "";
+
+                                System.out.print("\nIntroduce la nueva tarea:  ");
+
+                                do {
+                                    nuevaTarea = sc.nextLine();
+
+                                    if (!nuevaTarea.isBlank()) {
+                                        Tarea tarea = new Tarea(nuevaTarea, horaDeLaTarea);
+
+                                        semana.cambiarTareaYActualizarHora(estaHora, tarea);
+
+                                        System.out.println("\nLa tarea ha sido actualizada para la hora " + horaDeLaTarea + " con el código de tarea nº " + tarea.getCodigoTarea() + "\n");
+                                    } else {
+                                        System.out.println("\nLa tarea no puede estar en blanco.");
+                                    }
+                                } while(nuevaTarea.isBlank());
+                            } else if(sustituirONo.equalsIgnoreCase("no")){
+                                System.out.println("\nLa tarea de esta hora no ha sido sustituida.\n");
+                            } else{
+                                System.out.print("\nLa respuesta tiene que ser sí o no. Por favor, introduce la respuesta de nuevo. "
+                                            + "Esta hora ya tiene una tarea asignada. ¿Quieres sustituirla por una nueva tarea?  ");
+                            }
+                        } while(!sustituirONo.equalsIgnoreCase("sí") && !sustituirONo.equalsIgnoreCase("si")
+                            && !sustituirONo.equalsIgnoreCase("no"));
                     }
                 } else{
                     System.out.println("\nLa hora introducida no se encuentra dentro de las horas de una semana "
@@ -90,38 +111,52 @@ public class Principal {
 
             // Consultar la tarea de una hora concreta
             } else if (opcion == 2) {
-                System.out.print("\nIntroduce la hora:  ");
-                int horaAConocer = sc.nextInt();
+                semana.obtenerTareasDeLaBaseDeDatos();
+                List<Tarea> tareas = semana.getTareas();
 
-                Hora hora = semana.obtenerHora(horaAConocer);
-                if (hora != null) {
-                    Integer codigoTarea = hora.getCodigoTarea();
+                if(!tareas.isEmpty()) {
+                    System.out.print("\nIntroduce la hora:  ");
+                    int horaAConocer = sc.nextInt();
 
-                    if (codigoTarea != null) {
-                        Tarea tarea = semana.obtenerTarea((int) codigoTarea);
+                    Hora hora = semana.obtenerHora(horaAConocer);
+                    if (hora != null) {
+                        Integer codigoTarea = hora.getCodigoTarea();
 
-                        System.out.println("\nLa hora nº " + horaAConocer + " tiene asignada la tarea de código "
-                                + tarea.getCodigoTarea() + " y cuyo contenido es:\n"
-                                + "´´" + tarea.getContenidoTarea() + "``\n\n");
+                        if (codigoTarea != null) {
+                            Tarea tarea = semana.obtenerTarea((int) codigoTarea);
+
+                            System.out.println("\nLa hora nº " + horaAConocer + " tiene asignada la tarea de código "
+                                    + tarea.getCodigoTarea() + " y cuyo contenido es:\n"
+                                    + "´´" + tarea.getContenidoTarea() + "``\n\n");
+                        } else {
+                            System.out.println("\nLa hora nº " + horaAConocer + " no tiene ninguna tarea asignada.\n");
+                        }
                     } else {
-                        System.out.println("\nLa hora nº " + horaAConocer + " no tiene ninguna tarea asignada.\n");
+                        System.out.println("\nLa hora introducida no se encuentra dentro de las horas de una semana "
+                                + "(que van desde la hora 1 hasta la hora 168 ambas incluidas).\n");
                     }
                 } else{
-                    System.out.println("\nLa hora introducida no se encuentra dentro de las horas de una semana "
-                                + "(que van desde la hora 1 a la hora 168 ambas incluidas).\n");
+                    System.out.println("\nNo hay ninguna tarea en este momento.\n");
                 }
 
             // Consultar una tarea concreta
             } else if (opcion == 3) {
-                System.out.print("\nIntroduce el código de la tarea que desees consultar:  ");
-                int codigoTarea = sc.nextInt();
+                semana.obtenerTareasDeLaBaseDeDatos();
+                List<Tarea> tareas = semana.getTareas();
 
-                Tarea tarea = semana.obtenerTarea(codigoTarea);
+                if(!tareas.isEmpty()) {
+                    System.out.print("\nIntroduce el código de la tarea que desees consultar:  ");
+                    int codigoTarea = sc.nextInt();
 
-                if(tarea != null){
-                    System.out.println("\nInformación sobre la tarea:\n" + tarea + "\n\n");
+                    Tarea tarea = semana.obtenerTarea(codigoTarea);
+
+                    if (tarea != null) {
+                        System.out.println("\nInformación sobre la tarea:\n" + tarea + "\n\n");
+                    } else {
+                        System.out.println("\nNo existe ninguna tarea con ese código.\n");
+                    }
                 } else{
-                    System.out.println("\nNo existe ninguna tarea con ese código.\n");
+                    System.out.println("\nNo existe ninguna tarea en este momento.\n");
                 }
 
             // Consultar todas las tareas
@@ -146,16 +181,37 @@ public class Principal {
 
             // Eliminar una tarea
             } else if(opcion == 5){
-                System.out.print("\nIntroduce el código de la tarea que desees eliminar:  ");
-                int codigoTarea = sc.nextInt();
+                String horaOCodigoTarea = "";
 
-                if(semana.obtenerTarea(codigoTarea) != null){
-                    semana.eliminarTarea(codigoTarea);
+                do {
+                    System.out.print("\nPara eliminar dicha tarea, ¿quieres introducir la hora de dicha tarea o el código de la tarea? "
+                            + "Responde ´´hora`` o ´´codigotarea``:  ");
+                    horaOCodigoTarea = sc.nextLine();
 
-                    System.out.println("\n");
-                } else{
-                    System.out.println("\nNo existe ninguna tarea con ese código.\n");
-                }
+                    if(horaOCodigoTarea.equalsIgnoreCase("hora")){
+                        int codigoHora = 0;
+
+                        if() {
+
+                            semana.eliminarLaTareaDeEstaHora(codigoHora);
+                        } else{
+
+                        }
+                    } else if(horaOCodigoTarea.equalsIgnoreCase("codigo") || horaOCodigoTarea.equalsIgnoreCase("codigoTarea")
+                        || horaOCodigoTarea.equalsIgnoreCase("codigo de la tarea")){
+                        System.out.print("\nIntroduce el código de la tarea que desees eliminar:  ");
+                        int codigoTarea = sc.nextInt();
+
+                        if (semana.obtenerTarea(codigoTarea) != null) {
+                            semana.eliminarTarea(codigoTarea);
+
+                            System.out.println("\n");
+                        } else {
+                            System.out.println("\nNo existe ninguna tarea con ese código.\n");
+                        }
+                    }
+                } while(!horaOCodigoTarea.equalsIgnoreCase("hora") && !horaOCodigoTarea.equalsIgnoreCase("codigo")
+                    && !horaOCodigoTarea.equalsIgnoreCase("codigotarea") && !horaOCodigoTarea.equalsIgnoreCase("codigo de la tarea"));
 
             // Salir del programa
             } else if(opcion == 0) {
