@@ -1,5 +1,6 @@
 package ClasesElementales;
 
+import DAO.DAOGeneral;
 import DAO.HoraDAO;
 import DAO.TareaDAO;
 
@@ -14,6 +15,7 @@ public class Semana {
     private int codigoSemana;
     private List<Hora> horas;
     private List<Tarea> tareas;
+    DAOGeneral daoGeneral = new DAOGeneral();
     TareaDAO tareaDAO = new TareaDAO();
     HoraDAO horaDAO = new HoraDAO();
 

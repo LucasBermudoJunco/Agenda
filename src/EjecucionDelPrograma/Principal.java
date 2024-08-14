@@ -126,7 +126,7 @@ public class Principal {
                             Tarea tarea = semana.obtenerTarea((int) codigoTarea);
 
                             System.out.println("\nLa hora nº " + horaAConocer + " tiene asignada la tarea de código "
-                                    + tarea.getCodigoTarea() + " y cuyo contenido es:\n"
+                                    + tarea.getCodigoTarea() + " cuyo contenido es:\n"
                                     + "´´" + tarea.getContenidoTarea() + "``\n\n");
                         } else {
                             System.out.println("\nLa hora nº " + horaAConocer + " no tiene ninguna tarea asignada.\n");
@@ -181,37 +181,58 @@ public class Principal {
 
             // Eliminar una tarea
             } else if(opcion == 5){
-                String horaOCodigoTarea = "";
+                sc.nextLine();
 
-                do {
-                    System.out.print("\nPara eliminar dicha tarea, ¿quieres introducir la hora de dicha tarea o el código de la tarea? "
-                            + "Responde ´´hora`` o ´´codigotarea``:  ");
-                    horaOCodigoTarea = sc.nextLine();
+                semana.obtenerTareasDeLaBaseDeDatos();
+                List<Tarea> tareas = semana.getTareas();
 
-                    if(horaOCodigoTarea.equalsIgnoreCase("hora")){
-                        int codigoHora = 0;
+                if(!tareas.isEmpty()) {
+                    String horaOCodigoTarea = "";
 
-                        if() {
+                    do {
+                        System.out.print("\nPara eliminar dicha tarea, ¿quieres introducir la hora de dicha tarea o el código de la tarea? "
+                                + "Responde ´´hora`` o ´´codigotarea``:  ");
+                        horaOCodigoTarea = sc.nextLine();
 
-                            semana.eliminarLaTareaDeEstaHora(codigoHora);
-                        } else{
+                        if (horaOCodigoTarea.equalsIgnoreCase("hora")) {
+                            System.out.print("\nIntroduce la hora de la cual quieras eliminar su tarea:  ");
+                            int codigoHora = sc.nextInt();
 
-                        }
-                    } else if(horaOCodigoTarea.equalsIgnoreCase("codigo") || horaOCodigoTarea.equalsIgnoreCase("codigoTarea")
-                        || horaOCodigoTarea.equalsIgnoreCase("codigo de la tarea")){
-                        System.out.print("\nIntroduce el código de la tarea que desees eliminar:  ");
-                        int codigoTarea = sc.nextInt();
+                            if (semana.obtenerHora(codigoHora) != null) {
+                                Integer codigoTarea = semana.obtenerHora(codigoHora).getCodigoTarea();
 
-                        if (semana.obtenerTarea(codigoTarea) != null) {
-                            semana.eliminarTarea(codigoTarea);
+                                if (codigoTarea != null) {
+                                    semana.eliminarLaTareaDeEstaHora(codigoHora);
+                                    semana.eliminarTarea(codigoTarea);
 
-                            System.out.println("\n");
+                                    System.out.println("\nLa tarea de la hora " + codigoHora + " ha sido eliminada.\n");
+                                } else {
+                                    System.out.println("\nLa hora " + codigoHora + " no tenía ninguna tarea asignada.\n");
+                                }
+                            } else {
+                                System.out.println("\nLa hora introducida no se encuentra dentro de las horas de una semana "
+                                        + "(que van desde la hora 1 hasta la hora 168 ambas incluidas).\n");
+                            }
+                        } else if (horaOCodigoTarea.equalsIgnoreCase("codigo") || horaOCodigoTarea.equalsIgnoreCase("codigoTarea")
+                                || horaOCodigoTarea.equalsIgnoreCase("codigo de la tarea")) {
+                            System.out.print("\nIntroduce el código de la tarea que desees eliminar:  ");
+                            int codigoTarea = sc.nextInt();
+
+                            if (semana.obtenerTarea(codigoTarea) != null) {
+                                semana.eliminarTarea(codigoTarea);
+
+                                System.out.println("\nLa tarea de código " + codigoTarea + " ha sido eliminada.\n");
+                            } else {
+                                System.out.println("\nNo existe ninguna tarea con ese código.\n");
+                            }
                         } else {
-                            System.out.println("\nNo existe ninguna tarea con ese código.\n");
+                            System.out.println("\nRespuesta no válida. La respuesta tiene que ser ´´hora`` o ´´codigotarea``");
                         }
-                    }
-                } while(!horaOCodigoTarea.equalsIgnoreCase("hora") && !horaOCodigoTarea.equalsIgnoreCase("codigo")
-                    && !horaOCodigoTarea.equalsIgnoreCase("codigotarea") && !horaOCodigoTarea.equalsIgnoreCase("codigo de la tarea"));
+                    } while (!horaOCodigoTarea.equalsIgnoreCase("hora") && !horaOCodigoTarea.equalsIgnoreCase("codigo")
+                            && !horaOCodigoTarea.equalsIgnoreCase("codigotarea") && !horaOCodigoTarea.equalsIgnoreCase("codigo de la tarea"));
+                } else{
+                    System.out.println("\nNo existe ninguna tarea en este momento.\n");
+                }
 
             // Salir del programa
             } else if(opcion == 0) {
@@ -220,8 +241,6 @@ public class Principal {
                 System.out.println("\nOpcion no valida. Vuelva a elegir.\n\n");
             }
         } while(opcion != 0);
-
-
 
     }
 

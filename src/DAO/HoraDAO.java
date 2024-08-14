@@ -10,7 +10,6 @@ import java.util.List;
 public class HoraDAO {
 /// Atributo(s)
     private DAOGeneral daoGeneral = new DAOGeneral();
-    /*private TareaDAO tareaDAO = new TareaDAO();*/
     private Connection con;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -38,6 +37,12 @@ public class HoraDAO {
             }
         } catch(SQLException e){
             e.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return hora;
@@ -53,6 +58,12 @@ public class HoraDAO {
             ps.executeUpdate();
         } catch(SQLException e){
             e.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -80,6 +91,12 @@ public class HoraDAO {
             }
         } catch(SQLException e){
             e.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return horas;
@@ -95,6 +112,12 @@ public class HoraDAO {
             ps.executeUpdate();
         } catch(SQLException e){
             e.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -28,6 +28,12 @@ public class TareaDAO {
             ps.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -51,6 +57,12 @@ public class TareaDAO {
 
         } catch(SQLException e) {
             e.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return tarea;
@@ -69,6 +81,12 @@ public class TareaDAO {
             ps.executeUpdate();
         } catch(SQLException e){
             e.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -93,6 +111,12 @@ public class TareaDAO {
             }
         } catch(SQLException e){
             e.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return tareas;
@@ -113,6 +137,12 @@ public class TareaDAO {
             }
         } catch(SQLException e){
             e.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return estaLibreEsteCodigoTarea;
