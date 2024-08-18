@@ -1,9 +1,9 @@
 -- Creación de la Base de Datos
 
-/*drop database if exists agenda*/
-create database if not exists agenda
+/*drop database if exists agendav1*/
+create database if not exists agendav1
 	CHARACTER SET utf8 COLLATE utf8_spanish2_ci;
-use agenda;
+use agendav1;
 
 -- Creación de las tablas
 

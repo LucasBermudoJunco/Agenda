@@ -10,7 +10,9 @@ public class DAOGeneral {
 /// Atributos
     private Connection con = null;
     @SuppressWarnings("FieldCanBeLocal")
-    private final String url = "jdbc:mysql://localhost:3306/agenda";
+    private final int versionDeLaBaseDeDatos = 1;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final String url = "jdbc:mysql://localhost:3306/agendav" + versionDeLaBaseDeDatos;
     @SuppressWarnings("FieldCanBeLocal")
     private final String user = "root";
     @SuppressWarnings("FieldCanBeLocal")
