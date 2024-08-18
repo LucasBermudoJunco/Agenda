@@ -1,7 +1,5 @@
 package ClasesElementales;
 
-import java.io.Serializable;
-
 public class Tarea implements Comparable<Tarea> {
 
 /// Atributo(s)

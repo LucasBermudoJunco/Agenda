@@ -3,16 +3,20 @@ package EjecucionDelPrograma;
 import DAO.DAOGeneral;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+/*import java.sql.DriverManager;*/
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class EstablecimientoDeLaBaseDeDatos {
 
 /// Atributo(s)
-    private static DAOGeneral daoGeneral = new DAOGeneral();
+    private final static DAOGeneral daoGeneral = new DAOGeneral();
+    @SuppressWarnings("FieldCanBeLocal")
     private static Connection con;
+    @SuppressWarnings("FieldCanBeLocal")
     private static PreparedStatement ps;
+    @SuppressWarnings("FieldCanBeLocal")
     private static String sql;
 
 /// Ejecución de la clase

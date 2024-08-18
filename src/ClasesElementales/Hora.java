@@ -7,6 +7,7 @@ public class Hora {
     private Integer codigoTarea;
 
 /// Constructor(es)
+    @SuppressWarnings("unused")
     public Hora(){}
 
     public Hora(int codigoHora){

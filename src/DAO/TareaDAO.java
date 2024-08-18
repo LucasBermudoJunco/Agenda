@@ -6,11 +6,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class TareaDAO {
 
 /// Atributo(s)
-    private DAOGeneral daoGeneral = new DAOGeneral();
-    private HoraDAO horaDAO = new HoraDAO();
+    private final DAOGeneral daoGeneral = new DAOGeneral();
+    private final HoraDAO horaDAO = new HoraDAO();
     private Connection con;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -92,7 +93,7 @@ public class TareaDAO {
 
 /// Método(s) específico(s)
     public List<Tarea> obtenerTareas(){
-        List<Tarea> tareas = new ArrayList<Tarea>();
+        List<Tarea> tareas = new ArrayList<>();
 
         try{
             con = daoGeneral.connect();

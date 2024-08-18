@@ -3,17 +3,13 @@ package EjecucionDelPrograma;
 import ClasesElementales.Hora;
 import ClasesElementales.Semana;
 import ClasesElementales.Tarea;
-import DAO.HoraDAO;
-import DAO.TareaDAO;
-import com.mysql.cj.protocol.Resultset;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class Principal {
+@SuppressWarnings({"TextBlockConcatenation", "ForLoopReplaceableWithEnhancedFor"})
+public class MenuPrincipalParaConsola {
 
     public static void main(String[] args) {
 
@@ -26,7 +22,7 @@ public class Principal {
         /*TareaDAO tareaDAO = new TareaDAO();*/
 
     /// Variables del programa
-        int opcion = 0;
+        int opcion;
 
     /// Obtención de las horas de la base de datos
         semana.obtenerHorasDeLaBaseDeDatos();
@@ -52,7 +48,7 @@ public class Principal {
 
                 if(estaHora != null){
                     if(estaHora.getCodigoTarea() == null){
-                        String nuevaTarea = "";
+                        String nuevaTarea;
 
                         System.out.print("\nIntroduce la nueva tarea:  ");
 
@@ -70,7 +66,7 @@ public class Principal {
                             }
                         } while(nuevaTarea.isBlank());
                     } else{
-                        String sustituirONo = "";
+                        String sustituirONo;
 
                         System.out.print("\nEsta hora ya tiene una tarea asignada. ¿Quieres sustituirla por una nueva tarea?  ");
 
@@ -78,7 +74,7 @@ public class Principal {
                             sustituirONo = sc.nextLine();
 
                             if (sustituirONo.equalsIgnoreCase("sí") || sustituirONo.equalsIgnoreCase("si")) {
-                                String nuevaTarea = "";
+                                String nuevaTarea;
 
                                 System.out.print("\nIntroduce la nueva tarea:  ");
 
@@ -123,7 +119,7 @@ public class Principal {
                         Integer codigoTarea = hora.getCodigoTarea();
 
                         if (codigoTarea != null) {
-                            Tarea tarea = semana.obtenerTarea((int) codigoTarea);
+                            Tarea tarea = semana.obtenerTarea(codigoTarea);
 
                             System.out.println("\nLa hora nº " + horaAConocer + " tiene asignada la tarea de código "
                                     + tarea.getCodigoTarea() + " cuyo contenido es:\n"
@@ -187,7 +183,7 @@ public class Principal {
                 List<Tarea> tareas = semana.getTareas();
 
                 if(!tareas.isEmpty()) {
-                    String horaOCodigoTarea = "";
+                    String horaOCodigoTarea;
 
                     do {
                         System.out.print("\nPara eliminar dicha tarea, ¿quieres introducir la hora de dicha tarea o el código de la tarea? "

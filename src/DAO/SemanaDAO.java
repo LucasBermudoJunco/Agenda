@@ -1,7 +1,4 @@
 package DAO;
 
-public class SemanaDAO {
-
-
-
-}
+@SuppressWarnings("unused")
+public class SemanaDAO {}
