@@ -4,13 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class DAOGeneral {
 
 /// Atributos
     private Connection con = null;
-    private String url = "jdbc:mysql://localhost:3306/agenda";
-    private String user = "root";
-    private String password = "password";
+    @SuppressWarnings("FieldCanBeLocal")
+    private final String url = "jdbc:mysql://localhost:3306/agenda";
+    @SuppressWarnings("FieldCanBeLocal")
+    private final String user = "root";
+    @SuppressWarnings("FieldCanBeLocal")
+    private final String password = "password";
 
 /// Métodos
     public Connection connect() {

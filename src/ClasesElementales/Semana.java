@@ -1,6 +1,6 @@
 package ClasesElementales;
 
-import DAO.DAOGeneral;
+/*import DAO.DAOGeneral;*/
 import DAO.HoraDAO;
 import DAO.TareaDAO;
 
@@ -15,25 +15,30 @@ public class Semana {
     private int codigoSemana;
     private List<Hora> horas;
     private List<Tarea> tareas;
-    DAOGeneral daoGeneral = new DAOGeneral();
+    /*DAOGeneral daoGeneral = new DAOGeneral();*/
     TareaDAO tareaDAO = new TareaDAO();
     HoraDAO horaDAO = new HoraDAO();
 
 /// Constructor(es)
+    @SuppressWarnings("unused")
     public Semana() {}
 
+    @SuppressWarnings("unused")
     public Semana(int codigoSemana) {}
 
+    @SuppressWarnings("unused")
     public Semana(int codigoSemana, List<Hora> horas) {
         this.codigoSemana = codigoSemana;
         this.horas = horas;
     }
 
 /// Getters y Setters
+    @SuppressWarnings("unused")
     public int getCodigoSemana() {
         return codigoSemana;
     }
 
+    @SuppressWarnings("unused")
     public List<Hora> getHoras() {
         return horas;
     }

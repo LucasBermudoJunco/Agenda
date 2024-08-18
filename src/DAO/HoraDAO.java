@@ -1,15 +1,16 @@
 package DAO;
 
 import ClasesElementales.Hora;
-import ClasesElementales.Tarea;
+/*import ClasesElementales.Tarea;*/
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class HoraDAO {
 /// Atributo(s)
-    private DAOGeneral daoGeneral = new DAOGeneral();
+    private final DAOGeneral daoGeneral = new DAOGeneral();
     private Connection con;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -69,7 +70,7 @@ public class HoraDAO {
 
 /// Método(s) específico(s)
     public List<Hora> obtenerHoras(){
-        List<Hora> horas = new ArrayList<Hora>();
+        List<Hora> horas = new ArrayList<>();
 
         try{
             con = daoGeneral.connect();
