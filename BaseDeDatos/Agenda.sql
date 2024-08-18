@@ -32,7 +32,7 @@ create table Semana(
 
 /*
 describe hora;
-select * from hora;
+select * from hora order by codigoHora;
 describe tarea;
 select * from tarea;
 describe semana;
