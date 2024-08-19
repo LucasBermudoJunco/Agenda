@@ -35,6 +35,7 @@ describe hora;
 select * from hora order by codigoHora;
 describe tarea;
 select * from tarea order by codigoHora;
+select * from tarea order by codigoTarea;
 describe semana;
 select * from semana;
 */
