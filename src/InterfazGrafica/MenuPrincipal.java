@@ -10,10 +10,14 @@ import java.util.Objects;
 public class MenuPrincipal extends JFrame {
     
 /// Atributo(s)
-    TareaCreacion tareaCreacion;
-    TareaConsulta tareaConsulta;
-    
-    
+    private JPanel contentPane;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final FondoPanel fondoPanel = new FondoPanel("/Imagenes/imagenAgenda.png");
+    private TareaCreacion tareaCreacion;
+    private TareaConsulta tareaConsulta;
+    private TareaEliminacion tareaEliminacion;
+    private CalendarioConsulta calendarioConsulta;
+    private CalendarioBuscarTareaPorHora calendarioBuscarTareaPorHora;
     
     /*
     private JPanel panelPrincipal = new JPanel();
@@ -48,6 +52,7 @@ public class MenuPrincipal extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Agenda V2.1");
         setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/Imagenes/iconoAgenda.png")));
+        setContentPane(fondoPanel);
         /*setSize(800,600);*/
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -57,7 +62,7 @@ public class MenuPrincipal extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setForeground(Color.BLUE);
         menuBar.setBackground(Color.BLUE);
-        menuBar.setMargin(new Insets(10, 10, 10, 0));
+        menuBar.setMargin(new Insets(20, 20,20, 0));
         setJMenuBar(menuBar);
         
         // Menú ´´Tareas`` dentro de la barra Superior
@@ -68,37 +73,71 @@ public class MenuPrincipal extends JFrame {
         menuBar.add(menuTarea);
         
         // Menú ´´Añadir Tarea`` dentro del Menú ´´Tareas``
-        JMenuItem menunAnyadirTarea =  new JMenuItem("Añadir Tarea");
+        JMenuItem menuAnyadirTarea =  new JMenuItem("Añadir Tarea");
         menuTarea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            
+                
                 tareaCreacion = new TareaCreacion();
                 
             }
         });
-        menuTarea.add(menunAnyadirTarea);
+        menuTarea.add(menuAnyadirTarea);
         
-        
-        
-        /*
-        // Click con el ratón al botón de confirmar tarea
-        btnClick.addActionListener(new ActionListener() {
+        // Menú ´´Consultar Tarea`` dentro del Menú ´´Tareas``
+        JMenuItem menuConsultarTarea =  new JMenuItem("Consultar Tarea");
+        menuTarea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(btnClick,"¡Tarea guardada con éxito!");
+                
+                tareaConsulta = new TareaConsulta();
+                
             }
         });
+        menuTarea.add(menuConsultarTarea);
         
-        // Presionado de la tecla ´´Enter`` cuando la celda de texto ´´celdaTarea`` tiene el foco
-        celdaTarea.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("ENTER"),"pressEnter");
-        celdaTarea.getActionMap().put("pressEnter", new AbstractAction() {
+        // Menú ´´Eliminar Tarea`` dentro del Menú ´´Tareas``
+        JMenuItem menuEliminarTarea =  new JMenuItem("Eliminar Tarea");
+        menuTarea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnClick.doClick();
+                
+                tareaEliminacion = new TareaEliminacion();
+                
             }
         });
-         */
+        menuTarea.add(menuEliminarTarea);
+        
+        // Menú ´´Calendario`` dentro de la Barra Superior
+        JMenu menuCalendario = new JMenu("Calendario    ");
+        menuCalendario.setIcon(new ImageIcon(Objects.requireNonNull(MenuPrincipal.class.getResource("/Imagenes/iconoCalendario.png"))));
+        menuCalendario.setForeground(Color.WHITE);
+        menuCalendario.setSize(10,10);
+        menuBar.add(menuCalendario);
+        
+        // Menú ´´Mostrar Calendario`` dentro del Menú ´´Calendario``
+        JMenuItem menuMostrarCalendario =  new JMenuItem("Mostrar Calendario");
+        menuMostrarCalendario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                calendarioConsulta = new CalendarioConsulta();
+                
+            }
+        });
+        menuCalendario.add(menuMostrarCalendario);
+        
+        // Menú ´´Mostrar Calendario`` dentro del Menú ´´Calendario``
+        JMenuItem menuBuscarTareaPorHora =  new JMenuItem("Buscar Tarea por Hora");
+        menuMostrarCalendario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                calendarioBuscarTareaPorHora = new CalendarioBuscarTareaPorHora();
+                
+            }
+        });
+        menuCalendario.add(menuBuscarTareaPorHora);
         
         
     }
