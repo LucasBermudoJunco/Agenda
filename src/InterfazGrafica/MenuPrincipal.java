@@ -45,23 +45,25 @@ public class MenuPrincipal extends JFrame {
     public MenuPrincipal() {
     
     /// Sets
+        
+        // Sets del Comportamiento
         setType(Type.POPUP);
-        setResizable(true);
         setVisible(true);
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(800, 600));
         setBounds(100, 100, 1500, 800);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Agenda V2.1");
         setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/Imagenes/iconoAgenda.png")));
         setContentPane(fondoPanel);
-        /*setSize(800,600);*/
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
     /// Barra Superior de la aplicación
         
         // Barra Superior en sí misma
         JMenuBar menuBar = new JMenuBar();
-        menuBar.setForeground(Color.BLUE);
-        menuBar.setBackground(Color.BLUE);
+        /*menuBar.setForeground(Color.BLUE);*/
+        menuBar.setBackground(new Color(73, 130, 231));
         menuBar.setMargin(new Insets(20, 20,20, 0));
         setJMenuBar(menuBar);
         
@@ -74,7 +76,9 @@ public class MenuPrincipal extends JFrame {
         
         // Menú ´´Añadir Tarea`` dentro del Menú ´´Tareas``
         JMenuItem menuAnyadirTarea =  new JMenuItem("Añadir Tarea");
-        menuTarea.addActionListener(new ActionListener() {
+        menuAnyadirTarea.setBackground(new Color(73, 165, 231, 255));
+        menuAnyadirTarea.setForeground(Color.WHITE);
+        menuAnyadirTarea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -86,7 +90,9 @@ public class MenuPrincipal extends JFrame {
         
         // Menú ´´Consultar Tarea`` dentro del Menú ´´Tareas``
         JMenuItem menuConsultarTarea =  new JMenuItem("Consultar Tarea");
-        menuTarea.addActionListener(new ActionListener() {
+        menuConsultarTarea.setBackground(new Color(73, 165, 231, 255));
+        menuConsultarTarea.setForeground(Color.WHITE);
+        menuConsultarTarea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -98,7 +104,9 @@ public class MenuPrincipal extends JFrame {
         
         // Menú ´´Eliminar Tarea`` dentro del Menú ´´Tareas``
         JMenuItem menuEliminarTarea =  new JMenuItem("Eliminar Tarea");
-        menuTarea.addActionListener(new ActionListener() {
+        menuEliminarTarea.setBackground(new Color(73, 165, 231, 255));
+        menuEliminarTarea.setForeground(Color.WHITE);
+        menuEliminarTarea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -117,6 +125,8 @@ public class MenuPrincipal extends JFrame {
         
         // Menú ´´Mostrar Calendario`` dentro del Menú ´´Calendario``
         JMenuItem menuMostrarCalendario =  new JMenuItem("Mostrar Calendario");
+        menuMostrarCalendario.setBackground(new Color(73, 165, 231, 255));
+        menuMostrarCalendario.setForeground(Color.WHITE);
         menuMostrarCalendario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -127,9 +137,11 @@ public class MenuPrincipal extends JFrame {
         });
         menuCalendario.add(menuMostrarCalendario);
         
-        // Menú ´´Mostrar Calendario`` dentro del Menú ´´Calendario``
+        // Menú ´´Buscar Tarea por Calendario`` dentro del Menú ´´Calendario``
         JMenuItem menuBuscarTareaPorHora =  new JMenuItem("Buscar Tarea por Hora");
-        menuMostrarCalendario.addActionListener(new ActionListener() {
+        menuBuscarTareaPorHora.setBackground(new Color(73, 165, 231, 255));
+        menuBuscarTareaPorHora.setForeground(Color.WHITE);
+        menuBuscarTareaPorHora.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
