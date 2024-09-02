@@ -119,11 +119,11 @@ public class TareaCreacion extends JInternalFrame {
             boolean horaIntroducidaCorrectamente = true;
             
             try{
-                if(Integer.valueOf(horaDeLaTarea) < 0){
+                if(Integer.parseInt(horaDeLaTarea) < 0){
                     horaIntroducidaCorrectamente = false;
                 }
             } catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(this, "La hora introducida tiene que ser un número entero positivo (sin decimales)");
+                horaIntroducidaCorrectamente = false;
             }
             
             if(!horaIntroducidaCorrectamente) {
