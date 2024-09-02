@@ -9,7 +9,8 @@ import java.util.Objects;
 @SuppressWarnings("CallToPrintStackTrace")
 public class MenuPrincipal extends JFrame {
     
-/// Atributo(s)
+    /// Atributo(s)
+    private JDesktopPane desktopPane;
     private JPanel contentPane;
     @SuppressWarnings("FieldCanBeLocal")
     private final FondoPanel fondoPanel = new FondoPanel("/Imagenes/imagenAgenda.png");
@@ -26,7 +27,7 @@ public class MenuPrincipal extends JFrame {
     private JButton btnClick = new JButton("Pulsar");
      */
     
-/// Ejecución de la clase
+    /// Ejecución de la clase
     public static void main(String[] args) {
         
         EventQueue.invokeLater(new Runnable() {
@@ -34,6 +35,7 @@ public class MenuPrincipal extends JFrame {
             public void run() {
                 try{
                     MenuPrincipal frame = new MenuPrincipal();
+                    frame.setVisible(true);
                 } catch (Exception e){
                     e.printStackTrace();
                 }
@@ -41,14 +43,13 @@ public class MenuPrincipal extends JFrame {
         });
     }
     
-/// Constructor
+    /// Constructor
     public MenuPrincipal() {
-    
-    /// Sets
+        
+        /// Sets
         
         // Sets del Comportamiento
         setType(Type.POPUP);
-        setVisible(true);
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(800, 600));
@@ -56,9 +57,14 @@ public class MenuPrincipal extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Agenda V2.1");
         setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/Imagenes/iconoAgenda.png")));
-        setContentPane(fondoPanel);
+        //setContentPane(fondoPanel);
         
-    /// Barra Superior de la aplicación
+        desktopPane = new JDesktopPane();
+        desktopPane.setBorder(null);
+        desktopPane.setBackground(new Color(255,255,255));
+        getContentPane().add(desktopPane, BorderLayout.CENTER);
+        
+        /// Barra Superior de la aplicación
         
         // Barra Superior en sí misma
         JMenuBar menuBar = new JMenuBar();
@@ -82,7 +88,18 @@ public class MenuPrincipal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                tareaCreacion = new TareaCreacion();
+                if(tareaCreacion == null || tareaCreacion.isClosed()) {
+                    tareaCreacion = new TareaCreacion(desktopPane);
+                    desktopPane.add(tareaCreacion);
+                    tareaCreacion.setLocation(100,100);
+                    tareaCreacion.setVisible(true);
+                } else {
+                    tareaCreacion.moveToFront();
+                    // Recolocación de la ventana en su posición original por si estaba fuera de vista y,
+                    // debido a ello, el usuario pensaba que estaba cerrada
+                    tareaCreacion.setLocation(100,100);
+                }
+                
                 
             }
         });
@@ -90,16 +107,31 @@ public class MenuPrincipal extends JFrame {
         
         // Menú ´´Consultar Tarea`` dentro del Menú ´´Tareas``
         JMenuItem menuConsultarTarea =  new JMenuItem("Consultar Tarea");
-        menuConsultarTarea.setBackground(new Color(73, 165, 231, 255));
-        menuConsultarTarea.setForeground(Color.WHITE);
         menuConsultarTarea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                tareaConsulta = new TareaConsulta();
+                if(tareaConsulta == null || tareaConsulta.isClosed()) {
+                    tareaConsulta = new TareaConsulta(desktopPane);
+                    desktopPane.add(tareaConsulta);
+                    tareaConsulta.setLocation(180,180);
+                    tareaConsulta.setVisible(true);
+                } else {
+                    tareaConsulta.moveToFront();
+                    // Recolocación de la ventana en su posición original por si estaba fuera de vista y,
+                    // debido a ello, el usuario pensaba que estaba cerrada
+                    tareaConsulta.setLocation(180,180);
+                }
                 
+                try {
+                    tareaConsulta.setSelected(true);
+                } catch(java.beans.PropertyVetoException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
+        menuConsultarTarea.setBackground(new Color(73, 165, 231, 255));
+        menuConsultarTarea.setForeground(Color.WHITE);
         menuTarea.add(menuConsultarTarea);
         
         // Menú ´´Eliminar Tarea`` dentro del Menú ´´Tareas``
@@ -110,7 +142,17 @@ public class MenuPrincipal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                tareaEliminacion = new TareaEliminacion();
+                if(tareaEliminacion == null || tareaEliminacion.isClosed()) {
+                    tareaEliminacion = new TareaEliminacion(desktopPane);
+                    desktopPane.add(tareaEliminacion);
+                    tareaEliminacion.setLocation(260,260);
+                    tareaEliminacion.setVisible(true);
+                } else {
+                    tareaEliminacion.moveToFront();
+                    // Recolocación de la ventana en su posición original por si estaba fuera de vista y,
+                    // debido a ello, el usuario pensaba que estaba cerrada
+                    tareaEliminacion.setLocation(260,260);
+                }
                 
             }
         });
