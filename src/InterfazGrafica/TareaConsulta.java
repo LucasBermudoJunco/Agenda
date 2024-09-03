@@ -2,22 +2,30 @@ package InterfazGrafica;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+
+import Controlador.Controlador;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TareaConsulta extends JInternalFrame {
     
     /// Atributo(s)
     private static final long serialVersionUID = 1L;
-    private JDesktopPane desktopPane;
-    private JPanel panelTareaConsulta;
-    private JLabel lblTareaConsultaCabecera;
-    private JLabel lblTareaConsultaBuscarTareaPorHora;
-    private JLabel lblTareaConsultaBuscarTareaSuCodigo;
-    private JTextField textFieldTareaConsultaSegunSuHora;
-    private JTextField textFieldTareaConsultaSegunSuCodigo;
-    private JButton btnTareaConsultaSegunSuhora;
-    private JButton btnTareaConsultaSegunSuCodigo;
-    private JScrollPane scrollPaneTareaConsulta;
+    private final JDesktopPane desktopPane;
+    private final JLabel lblTareaConsultaCabecera;
+    private final JLabel lblTareaConsultaBuscarTareaPorHora;
+    private final JLabel lblTareaConsultaBuscarTareaSuCodigo;
+    private final JTextField textFieldTareaConsultaSegunSuHora;
+    private final JTextField textFieldTareaConsultaSegunSuCodigo;
+    private final JButton btnTareaConsultaSegunSuHora;
+    private final JButton btnTareaConsultaSegunSuCodigo;
+    private final JButton btnTareaConsultaTodasLasTareas;
+    private final JScrollPane scrollPaneTareaConsulta;
+    private Controlador controlador;
     
     
     
@@ -51,25 +59,141 @@ public class TareaConsulta extends JInternalFrame {
         getContentPane().add(lblTareaConsultaBuscarTareaSuCodigo);
         
         textFieldTareaConsultaSegunSuHora = new JTextField();
+        textFieldTareaConsultaSegunSuHora.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    consultarTarea("hora");
+                }
+            }
+        });
         textFieldTareaConsultaSegunSuHora.setBounds(170, 58, 86, 20);
         getContentPane().add(textFieldTareaConsultaSegunSuHora);
         textFieldTareaConsultaSegunSuHora.setColumns(10);
         
         textFieldTareaConsultaSegunSuCodigo = new JTextField();
+        textFieldTareaConsultaSegunSuCodigo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    consultarTarea("codigo");
+                }
+            }
+        });
         textFieldTareaConsultaSegunSuCodigo.setBounds(170, 83, 86, 20);
         getContentPane().add(textFieldTareaConsultaSegunSuCodigo);
         textFieldTareaConsultaSegunSuCodigo.setColumns(10);
         
-        btnTareaConsultaSegunSuhora = new JButton("Consultar");
-        btnTareaConsultaSegunSuhora.setBounds(279, 57, 89, 23);
-        getContentPane().add(btnTareaConsultaSegunSuhora);
+        btnTareaConsultaSegunSuHora = new JButton("Consultar");
+        btnTareaConsultaSegunSuHora.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                consultarTarea("hora");
+            }
+        });
+        btnTareaConsultaSegunSuHora.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    consultarTarea("hora");
+                }
+            }
+        });
+        btnTareaConsultaSegunSuHora.setBounds(279, 57, 89, 23);
+        getContentPane().add(btnTareaConsultaSegunSuHora);
         
         btnTareaConsultaSegunSuCodigo = new JButton("Consultar");
+        btnTareaConsultaSegunSuCodigo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                consultarTarea("codigo");
+            }
+        });
+        btnTareaConsultaSegunSuCodigo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    consultarTarea("codigo");
+                }
+            }
+        });
         btnTareaConsultaSegunSuCodigo.setBounds(279, 82, 89, 23);
         getContentPane().add(btnTareaConsultaSegunSuCodigo);
         
+        btnTareaConsultaTodasLasTareas = new JButton("Consultar todas las tareas");
+        btnTareaConsultaTodasLasTareas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                consultarTarea("todasLasTareas");
+            }
+        });
+        btnTareaConsultaTodasLasTareas.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    consultarTarea("todasLasTareas");
+                }
+            }
+        });
+        btnTareaConsultaTodasLasTareas.setBounds(114, 120, 189, 23);
+        getContentPane().add(btnTareaConsultaTodasLasTareas);
+        
         scrollPaneTareaConsulta = new JScrollPane();
-        scrollPaneTareaConsulta.setBounds(58, 145, 310, 199);
+        scrollPaneTareaConsulta.setBounds(58, 159, 310, 199);
         getContentPane().add(scrollPaneTareaConsulta);
+    }
+    
+    /// Método(s) específico(s)
+    public void consultarTarea(String horaOCodigo) {
+        
+        controlador = new Controlador();
+        
+        boolean horaOCodigoIntroducidosCorrectamente = true;
+        boolean horaOCodigoRellenados = true;
+        
+        if(horaOCodigo.equalsIgnoreCase("hora")) {
+            String horaDeLaTarea = textFieldTareaConsultaSegunSuHora.getText();
+            
+            try {
+                if(horaDeLaTarea.isBlank()) {
+                    horaOCodigoRellenados = false;
+                    horaOCodigoIntroducidosCorrectamente = false;
+                } else if(Integer.parseInt(horaDeLaTarea) <= 0) {
+                    horaOCodigoIntroducidosCorrectamente = false;
+                }
+            } catch(NumberFormatException e) {
+                horaOCodigoIntroducidosCorrectamente = false;
+            }
+            
+            if(horaOCodigoIntroducidosCorrectamente) {
+                JOptionPane.showMessageDialog(this, "hora o código introducidos correctamente");
+            }
+        } else if(horaOCodigo.equalsIgnoreCase("codigo")){
+            String codigoDeLaTarea = textFieldTareaConsultaSegunSuCodigo.getText();
+            
+            try {
+                if(codigoDeLaTarea.isBlank()) {
+                    horaOCodigoRellenados = false;
+                    horaOCodigoIntroducidosCorrectamente = false;
+                } else if(Integer.parseInt(codigoDeLaTarea) <= 0) {
+                    horaOCodigoIntroducidosCorrectamente = false;
+                }
+            } catch(NumberFormatException e) {
+                horaOCodigoIntroducidosCorrectamente = false;
+            }
+            
+            if(horaOCodigoIntroducidosCorrectamente) {
+                JOptionPane.showMessageDialog(this, "hora o código introducidos correctamente");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "botón ´´Consultar todas las tareas`` pulsado correctamente");
+        }
+        
+        if(!horaOCodigoRellenados) {
+            JOptionPane.showMessageDialog(this, "La celda no puede estar vacía");
+        } else if(!horaOCodigoIntroducidosCorrectamente) {
+            JOptionPane.showMessageDialog(this, "La hora y el código introducidos tienen que ser números enteros positivos (sin decimales)");
+        }
+        
     }
 }
