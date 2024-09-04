@@ -47,7 +47,7 @@ public class Semana {
         return tareas;
     }
 
-    /// Método(s) específico(s)
+/// Método(s) específico(s)
     public void obtenerHorasDeLaBaseDeDatos() {
         horas = horaDAO.obtenerHoras();
     }
@@ -56,9 +56,9 @@ public class Semana {
         tareas = tareaDAO.obtenerTareas();
     }
 
-    public Hora obtenerHora(int codigoHora) {
-        return horaDAO.read(codigoHora);
-    }
+//    public Hora obtenerHora(int codigoHora) {
+//        return horaDAO.read(codigoHora);
+//    }
 
     public Tarea obtenerTarea(int codigoTarea) {
         return tareaDAO.read(codigoTarea);

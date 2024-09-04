@@ -1,5 +1,6 @@
 package InterfazGrafica;
 
+import ClasesElementales.Hora;
 import Controlador.Controlador;
 
 import java.awt.Color;
@@ -38,7 +39,7 @@ public class TareaCreacion extends JInternalFrame {
         this.desktopPane = desktopPane;
         
         lblTareaCreacionCabecera = new JLabel("Introduce los datos de la tarea nueva");
-        lblTareaCreacionCabecera.setBounds(121, 28, 192, 14);
+        lblTareaCreacionCabecera.setBounds(121, 28, 212, 14);
         getContentPane().add(lblTareaCreacionCabecera);
         
         lblTareaCreacionHoraDeLaTarea = new JLabel("Hora:");
@@ -106,10 +107,7 @@ public class TareaCreacion extends JInternalFrame {
         String horaDeLaTarea = textFieldTareaCreacionHoraDeLaTarea.getText();
         String contenidoDeLaTarea = textAreaTareaCreacionContenidoDeLaTarea.getText();
         
-        if(horaDeLaTarea.isBlank() || contenidoDeLaTarea.isBlank()){
-            JOptionPane.showMessageDialog(this, "La hora y el contenido de la tarea " +
-                    "tienen que estar rellenados");
-        } else{
+        if(!horaDeLaTarea.isBlank() && !contenidoDeLaTarea.isBlank()){
             boolean horaIntroducidaCorrectamente = true;
             
             try{
@@ -120,9 +118,38 @@ public class TareaCreacion extends JInternalFrame {
                 horaIntroducidaCorrectamente = false;
             }
             
-            if(!horaIntroducidaCorrectamente) {
+            if(horaIntroducidaCorrectamente) {
+                if(controlador.horaIntrodValida(Integer.parseInt(horaDeLaTarea))){
+                    Hora horaConsultada = controlador.horaConsultada(Integer.parseInt(horaDeLaTarea));
+                    
+                    if(horaConsultada.getCodigoTarea() == null){
+                        System.out.println("Hora sin tarea todavía");
+                    } else{
+                        String mensaje = "La hora " + horaDeLaTarea + " ya contiene la tarea ´´" +
+                                "--OBTENER CONTENIDO DE LA TAREA--" +
+                                "``\n¿Quieres sustituirla por la tarea nueva que has introducido?";
+                        String titulo = "La Tarea ya existe";
+                        String[] opciones = {"Mantener tarea antigua","Sustituir"};
+                        
+                        int opcionElegida = JOptionPane.showOptionDialog(this,
+                                mensaje,
+                                titulo,
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                opciones,
+                                opciones[0]);
+                    }
+                } else{
+                    JOptionPane.showMessageDialog(this,"La hora " + horaDeLaTarea + " no existe en nuestro calendario.");
+                }
+            } else {
                 JOptionPane.showMessageDialog(this, "La hora introducida tiene que ser un número entero positivo (sin decimales)");
             }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "La hora y el contenido de la tarea " +
+                    "tienen que estar rellenados");
         }
         
     }
