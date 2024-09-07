@@ -1,10 +1,13 @@
 package DAO;
 
 import ClasesElementales.Tarea;
+import com.google.gson.Gson;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public class TareaDAO {
@@ -16,16 +19,44 @@ public class TareaDAO {
     private PreparedStatement ps;
     private ResultSet rs;
     private String sql;
+    private BufferedReader lector;
+    private BufferedWriter escritor;
+    private Gson gson;
 
 /// Métodos comunes
-    public void create(Tarea tarea) {
+    public void create(String fichero) {
+        Tarea tareaNueva;
+        gson = new Gson();
+        String contenidoDelFichero = "";
+
+        // Lectura de la tarea del fichero JSON
+        try{
+            lector = new BufferedReader(new FileReader(fichero));
+
+            String lineaDelFichero;
+            while((lineaDelFichero = lector.readLine()) != null){
+                contenidoDelFichero += lineaDelFichero;
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        } finally{
+            try {
+                lector.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        tareaNueva = gson.fromJson(contenidoDelFichero, Tarea.class);
+
+        // Inserción de la tarea nueva en la base de datos
         try{
             con = daoGeneral.connect();
             sql = "insert into tarea values(?,?,?)";
             ps = con.prepareStatement(sql);
-            ps.setInt(1,tarea.getCodigoTarea());
-            ps.setInt(2,tarea.getCodigoHora());
-            ps.setString(3, tarea.getContenidoTarea());
+            ps.setInt(1,tareaNueva.getCodigoTarea());
+            ps.setInt(2,tareaNueva.getCodigoHora());
+            ps.setString(3, tareaNueva.getContenidoTarea());
             ps.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
@@ -38,7 +69,20 @@ public class TareaDAO {
         }
     }
 
-    public Tarea read(int codigoTarea){
+    public Tarea read(String fichero){
+        int codigoTarea = 0;
+
+        // Lectura del fichero ´´Tarea.json`` y extracción del ´´códigoTarea``
+        try{
+            lector = new BufferedReader(new FileReader(fichero));
+
+            codigoTarea = Integer.parseInt(lector.readLine());
+
+            lector.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
         Tarea tarea = null;
 
         try {
@@ -69,10 +113,32 @@ public class TareaDAO {
         return tarea;
     }
 
-    public void delete(int codigoTareaAEliminar) {
-        Tarea tareaAEliminar = read(codigoTareaAEliminar);
+    public void delete(String fichero) {
+        int codigoTareaAEliminar = 0;
 
-        horaDAO.eliminarSuTarea(tareaAEliminar.getCodigoHora());
+        // Lectura del fichero ´´Tarea.json`` y extracción del ´´códigoTarea``
+        try{
+            lector = new BufferedReader(new FileReader(fichero));
+
+            codigoTareaAEliminar = Integer.parseInt(lector.readLine());
+
+            lector.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
+//        // Extracción de la tarea con dicho ´´códigoTarea``
+//        // para conocer su ´´codigoHora`` y poder eliminar la tarea de dicha hora
+//        Tarea tareaAEliminar = read(fichero);
+//
+//        // Escritura del fichero ´´Hora.json`` para eliminar la tarea de dicha hora
+//        try{
+//            escritor = new BufferedWriter(new FileWriter(fichero));
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
+//
+//        horaDAO.eliminarSuTarea(tareaAEliminar.getCodigoHora());
 
         try{
             con = daoGeneral.connect();
@@ -123,30 +189,40 @@ public class TareaDAO {
         return tareas;
     }
 
-    public boolean estaLibreEsteCodigoTarea(int codigoIntrodTarea) {
-        boolean estaLibreEsteCodigoTarea = true;
+    public int obtenerCodigoTareaAleatorio() {
 
-        try {
-            con = daoGeneral.connect();
-            sql = "SELECT * FROM Tarea WHERE codigoTarea = ?";
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, codigoIntrodTarea);
-            rs = ps.executeQuery();
+        boolean estaLibreEsteCodigoTarea;
 
-            if(rs.next() && rs.getInt("codigoTarea") == codigoIntrodTarea){
-                estaLibreEsteCodigoTarea = false;
-            }
-        } catch(SQLException e){
-            e.printStackTrace();
-        } finally{
+        int codigoAleatorioTarea = 0;
+        Random random = new Random();
+
+        do {
+            estaLibreEsteCodigoTarea = true;
+
+            codigoAleatorioTarea = random.nextInt(99999) + 1;
+
             try {
-                con.close();
+                con = daoGeneral.connect();
+                sql = "SELECT * FROM Tarea WHERE codigoTarea = ?";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, codigoAleatorioTarea);
+                rs = ps.executeQuery();
+
+                if (rs.next() && rs.getInt("codigoTarea") == codigoAleatorioTarea) {
+                    estaLibreEsteCodigoTarea = false;
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        } while(!estaLibreEsteCodigoTarea);
 
-        return estaLibreEsteCodigoTarea;
+        return codigoAleatorioTarea;
     }
 
 }

@@ -21,12 +21,31 @@ create table Tarea(
     foreign key(codigoHora) references hora(codigoHora)
 );
 
-/*alter table hora add constraint foreign key(codigoTarea) references tarea(codigoTarea);*/
+alter table hora add constraint foreign key(codigoTarea) references tarea(codigoTarea);
 
 create table Semana(
     codigoSemana int,
     primary key(codigoSemana)
 );
+
+-- Triggers
+
+delimiter $$
+create trigger triggerEliminacionTarea
+	before delete on tarea for each row
+begin
+	update hora set codigoTarea = null where codigoTarea = old.codigoTarea;
+end$$
+delimiter ;
+
+delimiter $$
+create trigger triggerCreacionTarea
+	after insert on tarea for each row
+begin
+	update hora set codigoTarea = new.codigoTarea where codigoHora = new.codigoHora;
+end$$
+delimiter ;
+
 
 -- Describes y Selects *
 
