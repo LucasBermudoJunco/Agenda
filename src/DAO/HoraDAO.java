@@ -3,6 +3,10 @@ package DAO;
 import ClasesElementales.Hora;
 /*import ClasesElementales.Tarea;*/
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +19,24 @@ public class HoraDAO {
     private PreparedStatement ps;
     private ResultSet rs;
     private String sql;
+    private BufferedReader lector;
+    private BufferedWriter escritor;
 
 /// Métodos comunes
-    public Hora read(int codigoHora){
+    public Hora read(String rutaFichero){
         Hora hora = null;
+        
+        int codigoHora = 0;
+        
+        try{
+            lector = new BufferedReader(new FileReader(rutaFichero));
+            
+            codigoHora = Integer.parseInt(lector.readLine());
+            
+            lector.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
 
         try{
             con = daoGeneral.connect();
@@ -101,6 +119,42 @@ public class HoraDAO {
         }
 
         return horas;
+    }
+    
+    public boolean estaHoraExiste(String rutaFichero){
+        boolean estaHoraExiste = false;
+        int codigoHora = 0;
+        
+        try{
+            lector = new BufferedReader(new FileReader(rutaFichero));
+            
+            String linea = lector.readLine();
+            
+            try{
+                codigoHora = Integer.parseInt(linea);
+            } catch(NumberFormatException e){
+                e.printStackTrace();
+            }
+            
+            lector.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        
+        try{
+            con = daoGeneral.connect();
+            sql = "select * from Hora where codigoHora = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codigoHora);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                estaHoraExiste = true;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return estaHoraExiste;
     }
 
     public void eliminarSuTarea(int codigoHora) {

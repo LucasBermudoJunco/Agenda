@@ -47,7 +47,7 @@ public class Semana {
         return tareas;
     }
 
-    /// Método(s) específico(s)
+/// Método(s) específico(s)
     public void obtenerHorasDeLaBaseDeDatos() {
         horas = horaDAO.obtenerHoras();
     }
@@ -56,84 +56,84 @@ public class Semana {
         tareas = tareaDAO.obtenerTareas();
     }
 
-    public Hora obtenerHora(int codigoHora) {
-        return horaDAO.read(codigoHora);
-    }
+//    public Hora obtenerHora(int codigoHora) {
+//        return horaDAO.read(codigoHora);
+//    }
 
-    public Tarea obtenerTarea(int codigoTarea) {
-        return tareaDAO.read(codigoTarea);
-    }
+//    public Tarea obtenerTarea(int codigoTarea) {
+//        return tareaDAO.read(codigoTarea);
+//    }
 
-    public int obtenerCodigoTareaAleatorio() {
-        Random random = new Random();
-        int codigoAleatorioTarea;
+//    public int obtenerCodigoTareaAleatorio() {
+//        Random random = new Random();
+//        int codigoAleatorioTarea;
+//
+//        do{
+//            codigoAleatorioTarea = random.nextInt(99999) + 1;
+//        } while(!tareaDAO.estaLibreEsteCodigoTarea(codigoAleatorioTarea));
+//
+//        return codigoAleatorioTarea;
+//    }
 
-        do{
-            codigoAleatorioTarea = random.nextInt(99999) + 1;
-        } while(!tareaDAO.estaLibreEsteCodigoTarea(codigoAleatorioTarea));
+//    public void crearTareaYActualizarHora(Tarea tarea){
+//        tarea.setCodigoTarea(obtenerCodigoTareaAleatorio());
+//        tareaDAO.create(tarea);
+//
+//        horas = horaDAO.obtenerHoras();
+//        Iterator<Hora> horasIterator = horas.iterator();
+//        while(horasIterator.hasNext()){
+//            Hora hora = horasIterator.next();
+//
+//            if(hora.getCodigoHora() == tarea.getCodigoHora()){
+//                hora.setCodigoTarea(tarea.getCodigoTarea());
+//
+//                horaDAO.update(hora.getCodigoHora(), hora.getCodigoTarea());
+//            }
+//        }
+//    }
 
-        return codigoAleatorioTarea;
-    }
+//    public void cambiarTareaYActualizarHora(Hora hora, Tarea tareaNueva) {
+//        tareaNueva.setCodigoTarea(obtenerCodigoTareaAleatorio());
+//        boolean tareaUHoraYaEncontrada = false;
+//
+//        // Borrar la tarea antigua
+//        List<Tarea> tareas = tareaDAO.obtenerTareas();
+//        Iterator<Tarea> tareasIterator = tareas.iterator();
+//        while (tareasIterator.hasNext() && !tareaUHoraYaEncontrada){
+//            Tarea estaTarea = tareasIterator.next();
+//
+//            if(estaTarea.getCodigoTarea() == hora.getCodigoTarea()){
+//                tareaUHoraYaEncontrada = true;
+//
+//                tareasIterator.remove();
+//
+//                tareaDAO.delete(estaTarea.getCodigoTarea());
+//            }
+//        }
+//
+//        // Crear la tarea nueva
+//        tareaDAO.create(tareaNueva);
+//
+//        // Establecer la tarea nueva en la misma hora
+//        tareaUHoraYaEncontrada = false;
+//        horas = horaDAO.obtenerHoras();
+//        Iterator<Hora> horasIterator = horas.iterator();
+//        while(horasIterator.hasNext() && !tareaUHoraYaEncontrada){
+//            Hora estaHora = horasIterator.next();
+//
+//            if(estaHora.getCodigoHora() == tareaNueva.getCodigoHora()){
+//                tareaUHoraYaEncontrada = true;
+//
+//                estaHora.setCodigoTarea(tareaNueva.getCodigoTarea());
+//
+//                horaDAO.update(estaHora.getCodigoHora(), tareaNueva.getCodigoTarea());
+//            }
+//        }
+//    }
 
-    public void crearTareaYActualizarHora(Tarea tarea){
-        tarea.setCodigoTarea(obtenerCodigoTareaAleatorio());
-        tareaDAO.create(tarea);
-
-        horas = horaDAO.obtenerHoras();
-        Iterator<Hora> horasIterator = horas.iterator();
-        while(horasIterator.hasNext()){
-            Hora hora = horasIterator.next();
-
-            if(hora.getCodigoHora() == tarea.getCodigoHora()){
-                hora.setCodigoTarea(tarea.getCodigoTarea());
-
-                horaDAO.update(hora.getCodigoHora(), hora.getCodigoTarea());
-            }
-        }
-    }
-
-    public void cambiarTareaYActualizarHora(Hora hora, Tarea tareaNueva) {
-        tareaNueva.setCodigoTarea(obtenerCodigoTareaAleatorio());
-        boolean tareaUHoraYaEncontrada = false;
-
-        // Borrar la tarea antigua
-        List<Tarea> tareas = tareaDAO.obtenerTareas();
-        Iterator<Tarea> tareasIterator = tareas.iterator();
-        while (tareasIterator.hasNext() && !tareaUHoraYaEncontrada){
-            Tarea estaTarea = tareasIterator.next();
-
-            if(estaTarea.getCodigoTarea() == hora.getCodigoTarea()){
-                tareaUHoraYaEncontrada = true;
-
-                tareasIterator.remove();
-
-                tareaDAO.delete(estaTarea.getCodigoTarea());
-            }
-        }
-
-        // Crear la tarea nueva
-        tareaDAO.create(tareaNueva);
-
-        // Establecer la tarea nueva en la misma hora
-        tareaUHoraYaEncontrada = false;
-        horas = horaDAO.obtenerHoras();
-        Iterator<Hora> horasIterator = horas.iterator();
-        while(horasIterator.hasNext() && !tareaUHoraYaEncontrada){
-            Hora estaHora = horasIterator.next();
-
-            if(estaHora.getCodigoHora() == tareaNueva.getCodigoHora()){
-                tareaUHoraYaEncontrada = true;
-
-                estaHora.setCodigoTarea(tareaNueva.getCodigoTarea());
-
-                horaDAO.update(estaHora.getCodigoHora(), tareaNueva.getCodigoTarea());
-            }
-        }
-    }
-
-    public void eliminarTarea(int codigoTareaAEliminar) {
-        tareaDAO.delete(codigoTareaAEliminar);
-    }
+//    public void eliminarTarea(int codigoTareaAEliminar) {
+//        tareaDAO.delete(codigoTareaAEliminar);
+//    }
 
     public void eliminarLaTareaDeEstaHora(int codigoHora){
         horaDAO.eliminarSuTarea(codigoHora);
