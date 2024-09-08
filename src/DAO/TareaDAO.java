@@ -76,6 +76,7 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
 
     public boolean read(String rutaFichero){
         boolean tareaConsultadaCorrectamente = false;
+        gson = new Gson();
         int codigoTarea = 0;
 
         // Lectura del fichero ´´Tarea.json`` y extracción del ´´códigoTarea``
