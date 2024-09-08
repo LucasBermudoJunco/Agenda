@@ -106,14 +106,14 @@ public class TareaConsulta extends JInternalFrame {
         btnTareaConsultaSegunSuCodigo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                consultarTarea("codigo");
+                consultarTarea("codigoTarea");
             }
         });
         btnTareaConsultaSegunSuCodigo.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    consultarTarea("codigo");
+                    consultarTarea("codigoTarea");
                 }
             }
         });
@@ -144,14 +144,14 @@ public class TareaConsulta extends JInternalFrame {
     }
     
     /// Método(s) específico(s)
-    public void consultarTarea(String horaOCodigo) {
+    public void consultarTarea(String tipoDeConsulta) {
         
         controlador = new Controlador();
         
         boolean horaOCodigoIntroducidosCorrectamente = true;
         boolean horaOCodigoRellenados = true;
         
-        if(horaOCodigo.equalsIgnoreCase("hora")) {
+        if(tipoDeConsulta.equalsIgnoreCase("hora")) {
             String horaDeLaTarea = textFieldTareaConsultaSegunSuHora.getText();
             
             try {
@@ -168,7 +168,7 @@ public class TareaConsulta extends JInternalFrame {
             if(horaOCodigoIntroducidosCorrectamente) {
                 JOptionPane.showMessageDialog(this, "hora o código introducidos correctamente");
             }
-        } else if(horaOCodigo.equalsIgnoreCase("codigo")){
+        } else if(tipoDeConsulta.equalsIgnoreCase("codigoTarea")){
             String codigoDeLaTarea = textFieldTareaConsultaSegunSuCodigo.getText();
             
             try {
