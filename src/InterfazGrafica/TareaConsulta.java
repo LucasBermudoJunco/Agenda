@@ -3,6 +3,7 @@ package InterfazGrafica;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import ClasesElementales.Tarea;
 import Controlador.Controlador;
 
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.awt.event.KeyEvent;
 
 public class TareaConsulta extends JInternalFrame {
     
-    /// Atributo(s)
+/// Atributo(s)
     private static final long serialVersionUID = 1L;
     private final JDesktopPane desktopPane;
     private final JLabel lblTareaConsultaCabecera;
@@ -29,7 +30,7 @@ public class TareaConsulta extends JInternalFrame {
     
     
     
-    /// Constructor
+/// Constructor
     public TareaConsulta(JDesktopPane desktopPane) {
         
         /// Sets
@@ -142,8 +143,8 @@ public class TareaConsulta extends JInternalFrame {
         scrollPaneTareaConsulta.setBounds(58, 159, 310, 199);
         getContentPane().add(scrollPaneTareaConsulta);
     }
-    
-    /// Método(s) específico(s)
+
+/// Método(s) específico(s)
     public void consultarTarea(String tipoDeConsulta) {
         
         controlador = new Controlador();
@@ -166,7 +167,15 @@ public class TareaConsulta extends JInternalFrame {
             }
             
             if(horaOCodigoIntroducidosCorrectamente) {
-                JOptionPane.showMessageDialog(this, "hora o código introducidos correctamente");
+                Tarea tareaConsultada = controlador.tareaConsultada(Integer.valueOf(horaDeLaTarea),"hora");
+
+                if(tareaConsultada != null) {
+                    // Mensaje para mostrar por ahora hasta tener desarrollada esta parte
+                    // (la de mostrar el contenido de la tarea en el JScrollPane)
+                    JOptionPane.showMessageDialog(this,"Sí hay una tarea asignada a la hora " + horaDeLaTarea);
+                } else{
+                    JOptionPane.showMessageDialog(this,"No hay ninguna tarea asignada a la hora " + horaDeLaTarea);
+                }
             }
         } else if(tipoDeConsulta.equalsIgnoreCase("codigoTarea")){
             String codigoDeLaTarea = textFieldTareaConsultaSegunSuCodigo.getText();
