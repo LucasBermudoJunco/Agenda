@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("CallToPrintStackTrace")
-public class TareaDAO {
+public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
 
-/// Atributo(s)
+    /// Atributo(s)
     private final DAOGeneral daoGeneral = new DAOGeneral();
     private final HoraDAO horaDAO = new HoraDAO();
     private Connection con;
@@ -23,15 +23,16 @@ public class TareaDAO {
     private BufferedWriter escritor;
     private Gson gson;
 
-/// Métodos comunes
-    public void create(String fichero) {
+    /// Métodos comunes
+    public boolean create(String rutaFichero) {
+        boolean tareaCreadaCorrectamente = false;
         Tarea tareaNueva;
         gson = new Gson();
         String contenidoDelFichero = "";
 
         // Lectura de la tarea del fichero JSON
         try{
-            lector = new BufferedReader(new FileReader(fichero));
+            lector = new BufferedReader(new FileReader(rutaFichero));
 
             String lineaDelFichero;
             while((lineaDelFichero = lector.readLine()) != null){
@@ -58,6 +59,8 @@ public class TareaDAO {
             ps.setInt(2,tareaNueva.getCodigoHora());
             ps.setString(3, tareaNueva.getContenidoTarea());
             ps.executeUpdate();
+
+            tareaCreadaCorrectamente = true;
         } catch (SQLException e){
             e.printStackTrace();
         } finally{
@@ -67,14 +70,17 @@ public class TareaDAO {
                 e.printStackTrace();
             }
         }
+
+        return tareaCreadaCorrectamente;
     }
 
-    public Tarea read(String fichero){
+    public boolean read(String rutaFichero){
+        boolean tareaConsultadaCorrectamente = false;
         int codigoTarea = 0;
 
         // Lectura del fichero ´´Tarea.json`` y extracción del ´´códigoTarea``
         try{
-            lector = new BufferedReader(new FileReader(fichero));
+            lector = new BufferedReader(new FileReader(rutaFichero));
 
             codigoTarea = Integer.parseInt(lector.readLine());
 
@@ -82,8 +88,6 @@ public class TareaDAO {
         } catch(IOException e){
             e.printStackTrace();
         }
-
-        Tarea tarea = null;
 
         try {
             con = daoGeneral.connect();
@@ -97,7 +101,21 @@ public class TareaDAO {
 
                 String contenidoTarea = rs.getString("contenidoTarea");
 
-                tarea = new Tarea(codigoTarea, codigoHora, contenidoTarea);
+                Tarea tareaConsultada = new Tarea(codigoTarea, codigoHora, contenidoTarea);
+
+                try{
+                    escritor = new BufferedWriter(new FileWriter(rutaFichero));
+
+                    String tareaEnString = gson.toJson(tareaConsultada);
+
+                    escritor.write(tareaEnString);
+
+                    escritor.close();
+
+                    tareaConsultadaCorrectamente = true;
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
             }
 
         } catch(SQLException e) {
@@ -110,15 +128,24 @@ public class TareaDAO {
             }
         }
 
-        return tarea;
+        return tareaConsultadaCorrectamente;
     }
 
-    public void delete(String fichero) {
+    public boolean update(String rutaFichero){
+        boolean tareaActualizadaCorrectamente = false;
+
+
+
+        return tareaActualizadaCorrectamente;
+    }
+
+    public boolean delete(String rutaFichero) {
+        boolean eliminadoCorrectamente = false;
         int codigoTareaAEliminar = 0;
 
         // Lectura del fichero ´´Tarea.json`` y extracción del ´´códigoTarea``
         try{
-            lector = new BufferedReader(new FileReader(fichero));
+            lector = new BufferedReader(new FileReader(rutaFichero));
 
             codigoTareaAEliminar = Integer.parseInt(lector.readLine());
 
@@ -146,6 +173,8 @@ public class TareaDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, codigoTareaAEliminar);
             ps.executeUpdate();
+
+            eliminadoCorrectamente = true;
         } catch(SQLException e){
             e.printStackTrace();
         } finally{
@@ -155,9 +184,11 @@ public class TareaDAO {
                 e.printStackTrace();
             }
         }
+
+        return eliminadoCorrectamente;
     }
 
-/// Método(s) específico(s)
+    /// Método(s) específico(s)
     public List<Tarea> obtenerTareas(){
         List<Tarea> tareas = new ArrayList<>();
 
