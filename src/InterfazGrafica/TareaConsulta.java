@@ -77,7 +77,7 @@ public class TareaConsulta extends JInternalFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    consultarTarea("codigo");
+                    consultarTarea("codigoTarea");
                 }
             }
         });
@@ -192,7 +192,15 @@ public class TareaConsulta extends JInternalFrame {
             }
             
             if(horaOCodigoIntroducidosCorrectamente) {
-                JOptionPane.showMessageDialog(this, "hora o código introducidos correctamente");
+                Tarea tareaConsultada = controlador.tareaConsultada(Integer.valueOf(codigoDeLaTarea),"codigoTarea");
+
+                if(tareaConsultada != null) {
+                    // Mensaje para mostrar por ahora hasta tener desarrollada esta parte
+                    // (la de mostrar el contenido de la tarea en el JScrollPane)
+                    JOptionPane.showMessageDialog(this,"Sí hay una tarea asignada a la hora " + codigoDeLaTarea);
+                } else{
+                    JOptionPane.showMessageDialog(this,"No hay ninguna tarea asignada a la hora " + codigoDeLaTarea);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "botón ´´Consultar todas las tareas`` pulsado correctamente");
