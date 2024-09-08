@@ -7,10 +7,7 @@ import DAO.SemanaDAO;
 import DAO.TareaDAO;
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class Controlador {
 
@@ -18,9 +15,9 @@ public class Controlador {
     private SemanaDAO semanaDAO;
     private HoraDAO horaDAO;
     private TareaDAO tareaDAO;
-    BufferedReader lector;
-    BufferedWriter escritor;
-    Gson gson;
+    private BufferedReader lector;
+    private BufferedWriter escritor;
+    private Gson gson;
     
 /// Constructor(es)
     public Controlador() {}
@@ -102,6 +99,56 @@ public class Controlador {
         }
 
         tareaDAO.create(fichero);
+    }
+
+    public Tarea tareaConsultada(int horaOCodigoDeLaTarea, String tipoDeConsulta){
+        Tarea tareaConsultada = null;
+        tareaDAO = new TareaDAO();
+        String rutaFichero = "";
+
+        try{
+            if(tipoDeConsulta.equalsIgnoreCase("hora")) {
+                rutaFichero = "src//Ficheros//Hora.json";
+            } else{
+                rutaFichero = "src//Ficheros//Tarea.json";
+            }
+
+            escritor = new BufferedWriter(new FileWriter(rutaFichero));
+
+            escritor.write(String.valueOf(horaOCodigoDeLaTarea));
+
+            escritor.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
+        if(tipoDeConsulta.equalsIgnoreCase("hora")){
+//            boolean tieneTarea  = tareaDAO.consultarTareaPorSuCodigoHora(rutaFichero);;
+//
+//            if(tieneTarea) {
+//
+//            }
+        } else{
+            boolean existeEstaTarea = tareaDAO.read(rutaFichero);
+
+            if(existeEstaTarea) {
+                try {
+                    lector = new BufferedReader(new FileReader(rutaFichero));
+
+                    StringBuilder contenidoDelFichero = new StringBuilder();
+                    String lineaDelFichero;
+                    while ((lineaDelFichero = lector.readLine()) == null) {
+                        contenidoDelFichero.append(lineaDelFichero);
+                    }
+
+                    tareaConsultada = gson.fromJson(String.valueOf(contenidoDelFichero), Tarea.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return tareaConsultada;
     }
 
 }
