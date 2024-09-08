@@ -1,10 +1,10 @@
 package DAO;
 
 public interface DAOInterfazDeJavaNoGrafica {
-    
-    boolean create(String fichero);
-    boolean read(String fichero);
-    boolean update(String fichero);
+
+    boolean create(String rutaFichero);
+    boolean read(String rutaFichero);
+    boolean update(String rutaFichero);
     boolean delete(String fichero);
     
 }
