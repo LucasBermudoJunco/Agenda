@@ -104,6 +104,7 @@ public class Controlador {
     public Tarea tareaConsultada(int horaOCodigoDeLaTarea, String tipoDeConsulta){
         Tarea tareaConsultada = null;
         tareaDAO = new TareaDAO();
+        gson = new Gson();
         String rutaFichero = "";
 
         try{
@@ -137,7 +138,7 @@ public class Controlador {
 
                     StringBuilder contenidoDelFichero = new StringBuilder();
                     String lineaDelFichero;
-                    while ((lineaDelFichero = lector.readLine()) == null) {
+                    while ((lineaDelFichero = lector.readLine()) != null) {
                         contenidoDelFichero.append(lineaDelFichero);
                     }
 
