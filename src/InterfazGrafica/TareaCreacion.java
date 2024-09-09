@@ -150,7 +150,7 @@ public class TareaCreacion extends JInternalFrame {
                         if (opcionElegida == 0) {
                             JOptionPane.showMessageDialog(this, "La tarea de la hora " +
                                     horaDeLaTarea + " no ha sido modificada");
-                        } else{
+                        } else if(opcionElegida == 1){
                             introducirNuevaTarea = true;
                             sustituirTarea = true;
                         }
