@@ -123,18 +123,21 @@ public class TareaCreacion extends JInternalFrame {
             if(horaIntroducidaCorrectamente) {
                 if(controlador.horaIntrodValida(Integer.parseInt(horaDeLaTarea))){
                     Hora horaConsultada = controlador.horaConsultada(Integer.parseInt(horaDeLaTarea));
+                    Integer codigoTarea = horaConsultada.getCodigoTarea();
 
                     boolean introducirNuevaTarea = false;
                     boolean sustituirTarea = false;
 
-                    if(horaConsultada.getCodigoTarea() == null){
+                    if(codigoTarea == null){
                         introducirNuevaTarea = true;
 
                         System.out.println("Hora sin tarea todavía");
                     } else{
+                        Tarea tareaConsultada = controlador.tareaConsultada(codigoTarea,"codigoTarea");
+
                         String mensaje = "La hora " + horaDeLaTarea + " ya contiene la tarea ´´" +
-                                "--OBTENER CONTENIDO DE LA TAREA--" +
-                                "``\n¿Quieres sustituirla por la tarea nueva que has introducido?";
+                                tareaConsultada.getContenidoTarea() +
+                                "``.\n¿Quieres sustituirla por la tarea nueva que has introducido?";
                         String titulo = "La Tarea ya existe";
                         String[] opciones = {"Mantener tarea antigua","Sustituir"};
                         
