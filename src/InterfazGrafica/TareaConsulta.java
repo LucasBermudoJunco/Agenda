@@ -197,9 +197,9 @@ public class TareaConsulta extends JInternalFrame {
                 if(tareaConsultada != null) {
                     // Mensaje para mostrar por ahora hasta tener desarrollada esta parte
                     // (la de mostrar el contenido de la tarea en el JScrollPane)
-                    JOptionPane.showMessageDialog(this,"Sí hay una tarea asignada a la hora " + codigoDeLaTarea);
+                    JOptionPane.showMessageDialog(this,"Sí hay una tarea con código " + codigoDeLaTarea);
                 } else{
-                    JOptionPane.showMessageDialog(this,"No hay ninguna tarea asignada a la hora " + codigoDeLaTarea);
+                    JOptionPane.showMessageDialog(this,"No hay ninguna tarea con código " + codigoDeLaTarea);
                 }
             }
         } else {
