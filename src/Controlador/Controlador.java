@@ -42,8 +42,11 @@ public class Controlador {
     
     public Hora horaConsultada(int horaIntrod) {
         horaDAO = new HoraDAO();
+        Hora horaConsultada = null;
+        gson = new Gson();
         String rutaFichero = "src//Ficheros//Hora.json";
-        
+
+        // Escritura de la hora introducida en el fichero
         try{
             escritor = new BufferedWriter(new FileWriter(rutaFichero));
             
@@ -53,8 +56,29 @@ public class Controlador {
         } catch(IOException e){
             e.printStackTrace();
         }
+
+        // Llamada al méto.do ´´read`` de la clase ´´HoraDAO``
+        // y lectura del fichero ´´Hora.json`` en caso de que el método
+        // devuelva true al haber resultado positiva la consulta
+        // de dicha hora en la base de datos
+        if(horaDAO.read(rutaFichero)) {
+            // Lectura del fichero que ya contiene el objeto hora
+            try {
+                lector = new BufferedReader(new FileReader(rutaFichero));
+
+                StringBuilder contenidoFichero = new StringBuilder();
+                String lineaFichero;
+                while ((lineaFichero = lector.readLine()) != null) {
+                    contenidoFichero.append(lineaFichero);
+                }
+
+                horaConsultada = gson.fromJson(String.valueOf(contenidoFichero), Hora.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         
-        return horaDAO.read(rutaFichero);
+        return horaConsultada;
     }
 
     public void eliminarTareaDeEstaHora(int codigoTarea) {
