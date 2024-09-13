@@ -1,12 +1,10 @@
 package DAO;
 
 import ClasesElementales.Hora;
+import com.google.gson.Gson;
 /*import ClasesElementales.Tarea;*/
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +19,16 @@ public class HoraDAO {
     private String sql;
     private BufferedReader lector;
     private BufferedWriter escritor;
+    private Gson gson;
 
 /// Métodos comunes
-    public Hora read(String rutaFichero){
-        Hora hora = null;
-        
+    public boolean read(String rutaFichero){
+        boolean horaConsultadaCorrectamente = false;
+        gson = new Gson();
         int codigoHora = 0;
-        
+
+        // Lectura del fichero ´´Hora.json``
+        // e incorporación de su contenido en la variable ´´codigoHora``
         try{
             lector = new BufferedReader(new FileReader(rutaFichero));
             
@@ -38,6 +39,7 @@ public class HoraDAO {
             e.printStackTrace();
         }
 
+        // Consulta a la base de datos de la hora con dicho ´´codigoHora``
         try{
             con = daoGeneral.connect();
             sql = "select * from Hora where codigoHora = ?";
@@ -49,9 +51,21 @@ public class HoraDAO {
                 int codigoTarea = rs.getInt("codigoTarea");
 
                 if(!rs.wasNull()) {
-                    hora = new Hora(codigoHora, codigoTarea);
-                } else {
-                    hora = new Hora(codigoHora);
+                    Hora horaConsultada = new Hora(codigoHora, codigoTarea);
+
+                    try{
+                        escritor = new BufferedWriter(new FileWriter(rutaFichero));
+
+                        String horaEnString = gson.toJson(horaConsultada);
+
+                        escritor.write(horaEnString);
+
+                        escritor.close();
+
+                        horaConsultadaCorrectamente = true;
+                    } catch(IOException e){
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch(SQLException e){
@@ -64,7 +78,7 @@ public class HoraDAO {
             }
         }
 
-        return hora;
+        return horaConsultadaCorrectamente;
     }
 
     public void update(int codigoHora,int codigoNuevoTarea){
