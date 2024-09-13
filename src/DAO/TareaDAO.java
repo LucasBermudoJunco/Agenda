@@ -194,7 +194,6 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
         boolean tieneTarea = false;
         int codigoHora = 0;
         gson = new Gson();
-        Tarea tareaConsultada = null;
 
         // Lectura del fichero ´´Tarea.json`` que contiene el ´´codigoHora``
         try{
@@ -218,7 +217,7 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
             if(rs.next()){
                 tieneTarea = true;
 
-                tareaConsultada = new Tarea(codigoHora, codigoHora, rs.getString("contenidoTarea"));
+                Tarea tareaConsultada = new Tarea(rs.getInt("codigoTarea"), codigoHora, rs.getString("contenidoTarea"));
 
                 // Escritura en ´´Tarea.json`` de la tarea consultada
                 try{
