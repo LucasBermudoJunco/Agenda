@@ -131,15 +131,12 @@ public class Controlador {
         Tarea tareaConsultada = null;
         tareaDAO = new TareaDAO();
         gson = new Gson();
-        String rutaFichero = "";
+        String rutaFichero = "src//Ficheros//Tarea.json";
+        boolean tieneTareaOExisteEstaTarea;
 
+        // Escritura en ´´Tarea.json`` de la hora o del codigoTarea
+        // (según el tipo de consulta que sea)
         try{
-            if(tipoDeConsulta.equalsIgnoreCase("hora")) {
-                rutaFichero = "src//Ficheros//Hora.json";
-            } else{
-                rutaFichero = "src//Ficheros//Tarea.json";
-            }
-
             escritor = new BufferedWriter(new FileWriter(rutaFichero));
 
             escritor.write(String.valueOf(horaOCodigoDeLaTarea));
@@ -149,29 +146,30 @@ public class Controlador {
             e.printStackTrace();
         }
 
+        // Llamada al méto.do de la clase ´´TareaDAO`` correspondiente
+        // (´´consultarTareaPorSuHora`` o ´´read``) en función de si la consulta
+        // es por la hora o por el codigoTarea
         if(tipoDeConsulta.equalsIgnoreCase("hora")){
-//            boolean tieneTarea  = tareaDAO.consultarTareaPorSuCodigoHora(rutaFichero);;
-//
-//            if(tieneTarea) {
-//
-//            }
+            tieneTareaOExisteEstaTarea  = tareaDAO.consultarTareaPorSuHora(rutaFichero);;
         } else{
-            boolean existeEstaTarea = tareaDAO.read(rutaFichero);
+            tieneTareaOExisteEstaTarea = tareaDAO.read(rutaFichero);
+        }
 
-            if(existeEstaTarea) {
-                try {
-                    lector = new BufferedReader(new FileReader(rutaFichero));
+        // Lectura de ´´Tarea.json`` e incorporación de su contenido al objeto tareaConsultada
+        // en caso de que la consulta a la base de datos sí haya obtenido resultado
+        if(tieneTareaOExisteEstaTarea) {
+            try {
+                lector = new BufferedReader(new FileReader(rutaFichero));
 
-                    StringBuilder contenidoDelFichero = new StringBuilder();
-                    String lineaDelFichero;
-                    while ((lineaDelFichero = lector.readLine()) != null) {
-                        contenidoDelFichero.append(lineaDelFichero);
-                    }
-
-                    tareaConsultada = gson.fromJson(String.valueOf(contenidoDelFichero), Tarea.class);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                StringBuilder contenidoDelFichero = new StringBuilder();
+                String lineaDelFichero;
+                while ((lineaDelFichero = lector.readLine()) != null) {
+                    contenidoDelFichero.append(lineaDelFichero);
                 }
+
+                tareaConsultada = gson.fromJson(String.valueOf(contenidoDelFichero), Tarea.class);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
