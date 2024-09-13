@@ -167,7 +167,7 @@ public class TareaConsulta extends JInternalFrame {
             }
             
             if(horaOCodigoIntroducidosCorrectamente) {
-                Tarea tareaConsultada = controlador.tareaConsultada(Integer.valueOf(horaDeLaTarea),"hora");
+                Tarea tareaConsultada = controlador.tareaConsultada(Integer.parseInt(horaDeLaTarea),"hora");
 
                 if(tareaConsultada != null) {
                     // Mensaje para mostrar por ahora hasta tener desarrollada esta parte
@@ -192,7 +192,7 @@ public class TareaConsulta extends JInternalFrame {
             }
             
             if(horaOCodigoIntroducidosCorrectamente) {
-                Tarea tareaConsultada = controlador.tareaConsultada(Integer.valueOf(codigoDeLaTarea),"codigoTarea");
+                Tarea tareaConsultada = controlador.tareaConsultada(Integer.parseInt(codigoDeLaTarea),"codigoTarea");
 
                 if(tareaConsultada != null) {
                     // Mensaje para mostrar por ahora hasta tener desarrollada esta parte
