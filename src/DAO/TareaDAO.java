@@ -190,6 +190,56 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
     }
 
 /// Método(s) específico(s)
+    public boolean consultarTareaPorSuHora(String rutaFichero){
+        boolean tieneTarea = false;
+        int codigoHora = 0;
+        gson = new Gson();
+        Tarea tareaConsultada = null;
+
+        // Lectura del fichero ´´Tarea.json`` que contiene el ´´codigoHora``
+        try{
+            lector = new BufferedReader(new FileReader(rutaFichero));
+
+            codigoHora = Integer.parseInt(lector.readLine());
+
+            lector.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
+        // Consulta en la base de datos de la tarea con codigoHora = ´´codigoHora``
+        // y escritura en ´´Tarea.json`` en caso de que la consulta sí haya obtenido resultado
+        try{
+            con = daoGeneral.connect();
+            sql = "SELECT * FROM Tarea WHERE codigoHora = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codigoHora);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                tieneTarea = true;
+
+                tareaConsultada = new Tarea(codigoHora, codigoHora, rs.getString("contenidoTarea"));
+
+                // Escritura en ´´Tarea.json`` de la tarea consultada
+                try{
+                    escritor = new BufferedWriter(new FileWriter(rutaFichero));
+
+                    String tareaEnString = gson.toJson(tareaConsultada);
+
+                    escritor.write(tareaEnString);
+
+                    escritor.close();
+                } catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return tieneTarea;
+    }
+
     public List<Tarea> obtenerTareas(){
         List<Tarea> tareas = new ArrayList<>();
 
