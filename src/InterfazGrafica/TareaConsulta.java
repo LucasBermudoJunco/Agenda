@@ -179,16 +179,17 @@ public class TareaConsulta extends JInternalFrame {
 
                 if(tareaConsultada != null) {
                     textoResultadoDeLaConsulta.append("Datos de la tarea asignada a la hora ").append(horaDeLaTarea).append(":\n\n")
-                            .append("Código de la tarea: ").append(tareaConsultada.getCodigoTarea()).append(":\n")
-                            .append("Hora: ").append(horaDeLaTarea).append(":\n")
+                            .append("Código de la tarea: ").append(tareaConsultada.getCodigoTarea()).append("\n")
+                            .append("Hora: ").append(horaDeLaTarea).append("\n")
                             .append("Contenido: ").append(tareaConsultada.getContenidoTarea());
 
                     textAreaTareaConsulta.setText(String.valueOf(textoResultadoDeLaConsulta));
 
                     JOptionPane.showMessageDialog(this,"Tarea encontrada exitosamente en la hora " + horaDeLaTarea);
                 } else{
-                    JOptionPane.showMessageDialog(this,"No hay ninguna tarea asignada a la hora " + horaDeLaTarea);
                     textAreaTareaConsulta.setText("");
+
+                    JOptionPane.showMessageDialog(this,"No hay ninguna tarea asignada a la hora " + horaDeLaTarea);
                 }
             }
         } else if(tipoDeConsulta.equalsIgnoreCase("codigoTarea")){
@@ -209,10 +210,17 @@ public class TareaConsulta extends JInternalFrame {
                 Tarea tareaConsultada = controlador.tareaConsultada(Integer.parseInt(codigoDeLaTarea),"codigoTarea");
 
                 if(tareaConsultada != null) {
-                    // Mensaje para mostrar por ahora hasta tener desarrollada esta parte
-                    // (la de mostrar el contenido de la tarea en el JScrollPane)
+                    textoResultadoDeLaConsulta.append("Datos de la tarea con código ").append(codigoDeLaTarea).append(":\n\n")
+                            .append("Código de la tarea: ").append(codigoDeLaTarea).append("\n")
+                            .append("Hora: ").append(tareaConsultada.getCodigoHora()).append("\n")
+                            .append("Contenido: ").append(tareaConsultada.getContenidoTarea());
+
+                    textAreaTareaConsulta.setText(String.valueOf(textoResultadoDeLaConsulta));
+
                     JOptionPane.showMessageDialog(this,"Sí hay una tarea con código " + codigoDeLaTarea);
                 } else{
+                    textAreaTareaConsulta.setText("");
+
                     JOptionPane.showMessageDialog(this,"No hay ninguna tarea con código " + codigoDeLaTarea);
                 }
             }
