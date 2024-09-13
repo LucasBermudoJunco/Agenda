@@ -14,7 +14,7 @@ public class Hora {
         this.codigoHora = codigoHora;
     }
 
-    public Hora(int codigoHora, int codigoTarea){
+    public Hora(int codigoHora, Integer codigoTarea){
         this.codigoHora = codigoHora;
         this.codigoTarea = codigoTarea;
     }
