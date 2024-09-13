@@ -76,6 +76,8 @@ public class Controlador {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else{
+            horaConsultada = new Hora(horaIntrod);
         }
         
         return horaConsultada;
