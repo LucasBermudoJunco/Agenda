@@ -49,7 +49,7 @@ echo
 echo "Fusión realizada de la rama BaseDeDatos con la rama Integracion"
 echo
 
-git push origin V2.1-Controlador
+git push origin V2.1-BaseDeDatos
 
 echo
 echo "Push realizado de la rama BaseDeDatos"
