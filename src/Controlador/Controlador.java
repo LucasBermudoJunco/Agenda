@@ -7,25 +7,27 @@ import DAO.SemanaDAO;
 import DAO.TareaDAO;
 import InterfazGrafica.MenuPrincipal;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Controlador {
 
-/// Atributo(s)
+    /// Atributo(s)
     private SemanaDAO semanaDAO;
     private HoraDAO horaDAO;
     private TareaDAO tareaDAO;
     private BufferedReader lector;
     private BufferedWriter escritor;
     private Gson gson;
-    
-/// Constructor(es)
+
+    /// Constructor(es)
     public Controlador() {}
-    
-/// Método(s) específico(s)
+
+    /// Método(s) específico(s)
     // Creación fuera del jar de los archivos que se necesitan para leer y escribir información
     public static void copiarArchivoDesdeJar(String nombreArchivoInterno, String rutaArchivoExterno){
         InputStream inputStream = MenuPrincipal.class.getResourceAsStream("/" + nombreArchivoInterno);
@@ -60,20 +62,20 @@ public class Controlador {
     public boolean horaIntrodValida(int horaIntrod) {
         horaDAO = new HoraDAO();
         String rutaFichero = "src//Ficheros//Hora.json";
-        
+
         try {
             escritor = new BufferedWriter(new FileWriter(rutaFichero));
-            
+
             escritor.write(String.valueOf(horaIntrod));
-            
+
             escritor.close();
         } catch(IOException e){
             e.printStackTrace();
         }
-        
+
         return horaDAO.estaHoraExiste(rutaFichero);
     }
-    
+
     public Hora horaConsultada(int horaIntrod) {
         horaDAO = new HoraDAO();
         Hora horaConsultada = null;
@@ -83,9 +85,9 @@ public class Controlador {
         // Escritura de la hora introducida en el fichero
         try{
             escritor = new BufferedWriter(new FileWriter(rutaFichero));
-            
+
             escritor.write(String.valueOf(horaIntrod));
-            
+
             escritor.close();
         } catch(IOException e){
             e.printStackTrace();
@@ -113,7 +115,7 @@ public class Controlador {
         } else{
             horaConsultada = new Hora(horaIntrod);
         }
-        
+
         return horaConsultada;
     }
 
@@ -213,6 +215,8 @@ public class Controlador {
     public List<Tarea> todasLasTareas(){
         List<Tarea> todasLasTareas = new ArrayList<Tarea>();
         String rutaFicheroTarea = "src//Ficheros//Tarea.json";
+        tareaDAO = new TareaDAO();
+        gson = new Gson();
 
         tareaDAO.obtenerTodasLasTareas(rutaFicheroTarea);
 
@@ -225,7 +229,10 @@ public class Controlador {
                 contenidoFichero.append(lineaFichero);
             }
 
-            todasLasTareas = gson.fromJson(String.valueOf(contenidoFichero), List.class);
+            // Adaptación del tipo de lista (List<Tarea>) al Gson
+            // para que sepa de qué tipo de lista se trata
+            Type tipoDeLista = new TypeToken<List<Tarea>>() {}.getType();
+            todasLasTareas = gson.fromJson(String.valueOf(contenidoFichero), tipoDeLista);
         } catch(IOException e){
             e.printStackTrace();
         } finally {
