@@ -1,9 +1,12 @@
 package InterfazGrafica;
 
+import Controlador.Controlador;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Objects;
 
 @SuppressWarnings("CallToPrintStackTrace")
@@ -19,7 +22,7 @@ public class MenuPrincipal extends JFrame {
     private TareaEliminacion tareaEliminacion;
     private CalendarioConsulta calendarioConsulta;
     private CalendarioBuscarTareaPorHora calendarioBuscarTareaPorHora;
-    
+
     /*
     private JPanel panelPrincipal = new JPanel();
     private JLabel tarea = new JLabel();
@@ -29,7 +32,18 @@ public class MenuPrincipal extends JFrame {
     
     /// Ejecución de la clase
     public static void main(String[] args) {
-        
+
+//        // Creación de los archivos externos para leer y escribir sobre ellos
+//
+//        // Ruta de los archivos externos
+//        String rutaHoraJSON = "ArchivosLecturaYEscritura/Hora.json";
+//        String rutaTareaJSON = "ArchivosLecturaYEscritura/Tarea.json";
+//
+//        // Copiado de los archivos JSON desde el JAR a la ubicación externa
+//        Controlador.copiarArchivoDesdeJar("Hora.json", rutaHoraJSON);
+//        Controlador.copiarArchivoDesdeJar("Tarea.json", rutaTareaJSON);
+
+        // Ejecución de la aplicación
         EventQueue.invokeLater(new Runnable() {
             @SuppressWarnings("unused")
             public void run() {
