@@ -239,8 +239,8 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
         return tieneTarea;
     }
 
-    public List<Tarea> obtenerTareas(){
-        List<Tarea> tareas = new ArrayList<>();
+    public boolean obtenerTodasLasTareas(String rutaFichero){
+        boolean listaConsultadaCorrectamente = false;
 
         try{
             con = daoGeneral.connect();
@@ -248,14 +248,35 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
 
-            while(rs.next()){
-                Tarea tarea;
-                int codigoTarea = rs.getInt("codigoTarea");
-                int codigoHora = rs.getInt("codigoHora");
-                String contenidoTarea = rs.getString("contenidoTarea");
-                tarea = new Tarea(codigoTarea, codigoHora, contenidoTarea);
+            if(rs.next()) {
+                List<Tarea> tareas = new ArrayList<>();
 
-                tareas.add(tarea);
+                while (rs.next()) {
+                    int codigoTarea = rs.getInt("codigoTarea");
+                    int codigoHora = rs.getInt("codigoHora");
+                    String contenidoTarea = rs.getString("contenidoTarea");
+                    Tarea tareaNuevaLeida = new Tarea(codigoTarea, codigoHora, contenidoTarea);
+
+                    tareas.add(tareaNuevaLeida);
+                }
+
+                listaConsultadaCorrectamente = true;
+
+                try{
+                    escritor = new BufferedWriter(new FileWriter(rutaFichero));
+
+                    String tareaEnString = gson.toJson(tareas);
+
+                    escritor.write(tareaEnString);
+                } catch (IOException e){
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        escritor.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         } catch(SQLException e){
             e.printStackTrace();
@@ -267,7 +288,7 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
             }
         }
 
-        return tareas;
+        return listaConsultadaCorrectamente;
     }
 
     public int obtenerCodigoTareaAleatorio() {
