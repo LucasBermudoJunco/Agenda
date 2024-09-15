@@ -1,3 +1,16 @@
+#!/bin/bash
+
+# Script para la fusión automática de todas las demás ramas
+# con los cambios (coomit y push) que se hayan producido
+# en la rama ´´V2.1-Controlador``.
+# Para ejecutarlo, Asegurarse de que el usuario tiene los derechos
+# de ejecución de este script (Viéndolos con el comando ´´ls -l`` y,
+# en caso de que no los tenga,
+# Ejecutando el comando ´´chmod +x FusionDeControlador.sh``),
+# Situarse en la rama V2.1-Controlador
+# y Ejecutar el siguiente comando:
+# ./FusionDeControlador.sh
+
 # Rama Integracion
 git checkout V2.1-Integracion
 

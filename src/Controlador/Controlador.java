@@ -218,28 +218,31 @@ public class Controlador {
         tareaDAO = new TareaDAO();
         gson = new Gson();
 
-        tareaDAO.obtenerTodasLasTareas(rutaFicheroTarea);
+        boolean listaTieneTareas = tareaDAO.obtenerTodasLasTareas(rutaFicheroTarea);
 
-        try{
-            lector = new BufferedReader(new FileReader(rutaFicheroTarea));
-
-            StringBuilder contenidoFichero = new StringBuilder();
-            String lineaFichero;
-            while ((lineaFichero = lector.readLine()) != null) {
-                contenidoFichero.append(lineaFichero);
-            }
-
-            // Adaptación del tipo de lista (List<Tarea>) al Gson
-            // para que sepa de qué tipo de lista se trata
-            Type tipoDeLista = new TypeToken<List<Tarea>>() {}.getType();
-            todasLasTareas = gson.fromJson(String.valueOf(contenidoFichero), tipoDeLista);
-        } catch(IOException e){
-            e.printStackTrace();
-        } finally {
+        if(listaTieneTareas) {
             try {
-                lector.close();
+                lector = new BufferedReader(new FileReader(rutaFicheroTarea));
+
+                StringBuilder contenidoFichero = new StringBuilder();
+                String lineaFichero;
+                while ((lineaFichero = lector.readLine()) != null) {
+                    contenidoFichero.append(lineaFichero);
+                }
+
+                // Adaptación del tipo de lista (List<Tarea>) al Gson
+                // para que sepa de qué tipo de lista se trata
+                Type tipoDeLista = new TypeToken<List<Tarea>>() {
+                }.getType();
+                todasLasTareas = gson.fromJson(String.valueOf(contenidoFichero), tipoDeLista);
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    lector.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
