@@ -251,14 +251,14 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
             if(rs.next()) {
                 List<Tarea> tareas = new ArrayList<>();
 
-                while (rs.next()) {
+                do {
                     int codigoTarea = rs.getInt("codigoTarea");
                     int codigoHora = rs.getInt("codigoHora");
                     String contenidoTarea = rs.getString("contenidoTarea");
                     Tarea tareaNuevaLeida = new Tarea(codigoTarea, codigoHora, contenidoTarea);
 
                     tareas.add(tareaNuevaLeida);
-                }
+                } while (rs.next());
 
                 listaConsultadaCorrectamente = true;
 
