@@ -11,6 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class TareaConsulta extends JInternalFrame {
     
@@ -225,8 +229,27 @@ public class TareaConsulta extends JInternalFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(this, "botón ´´Consultar todas las tareas`` pulsado correctamente");
-        }
+            List<Tarea> listaDeTodasLasTareas = controlador.todasLasTareas();
+            Collections.sort(listaDeTodasLasTareas);
+
+            if(!listaDeTodasLasTareas.isEmpty()){
+                textoResultadoDeLaConsulta.append("Datos de todas las tareas:");
+                Iterator<Tarea> iteradorTareas = listaDeTodasLasTareas.iterator();
+                while(iteradorTareas.hasNext()) {
+                    Tarea tareaConsultada = iteradorTareas.next();
+                    if(tareaConsultada != null) {
+                        textoResultadoDeLaConsulta.append("\n\n").append(tareaConsultada);
+                    }
+                }
+
+                textAreaTareaConsulta.setText(String.valueOf(textoResultadoDeLaConsulta));
+
+                JOptionPane.showMessageDialog(this,"Sí hay tareas apuntadas en la agenda");
+            } else{
+                textAreaTareaConsulta.setText("");
+
+                JOptionPane.showMessageDialog(this, "En este momento no hay ninguna tarea apuntada en la agenda");
+        }   }
         
         if(!horaOCodigoRellenados) {
             JOptionPane.showMessageDialog(this, "La celda no puede estar vacía");
