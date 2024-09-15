@@ -12,7 +12,7 @@ import java.util.Random;
 @SuppressWarnings("CallToPrintStackTrace")
 public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
 
-/// Atributo(s)
+    /// Atributo(s)
     private final DAOGeneral daoGeneral = new DAOGeneral();
     private final HoraDAO horaDAO = new HoraDAO();
     private Connection con;
@@ -23,7 +23,7 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
     private BufferedWriter escritor;
     private Gson gson;
 
-/// Métodos comunes
+    /// Métodos comunes
     public boolean create(String rutaFichero) {
         boolean tareaCreadaCorrectamente = false;
         Tarea tareaNueva;
@@ -189,7 +189,7 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
         return eliminadoCorrectamente;
     }
 
-/// Método(s) específico(s)
+    /// Método(s) específico(s)
     public boolean consultarTareaPorSuHora(String rutaFichero){
         boolean tieneTarea = false;
         int codigoHora = 0;
@@ -241,6 +241,7 @@ public class TareaDAO implements DAOInterfazDeJavaNoGrafica{
 
     public boolean obtenerTodasLasTareas(String rutaFichero){
         boolean listaConsultadaCorrectamente = false;
+        gson = new Gson();
 
         try{
             con = daoGeneral.connect();
