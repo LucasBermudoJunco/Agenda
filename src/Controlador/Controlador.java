@@ -5,6 +5,7 @@ import ClasesElementales.Tarea;
 import DAO.HoraDAO;
 import DAO.SemanaDAO;
 import DAO.TareaDAO;
+import InterfazGrafica.MenuPrincipal;
 import com.google.gson.Gson;
 
 import java.io.*;
@@ -23,6 +24,37 @@ public class Controlador {
     public Controlador() {}
     
 /// Método(s) específico(s)
+    // Creación fuera del jar de los archivos que se necesitan para leer y escribir información
+    public static void copiarArchivoDesdeJar(String nombreArchivoInterno, String rutaArchivoExterno){
+        InputStream inputStream = MenuPrincipal.class.getResourceAsStream("/" + nombreArchivoInterno);
+        if(inputStream == null){
+            System.err.println("\nNo se encontró el archivo " + nombreArchivoInterno + "\n");
+        }
+
+        File archivoExterno = new File(rutaArchivoExterno);
+        archivoExterno.getParentFile().mkdirs();
+
+        try (FileOutputStream outputStream = new FileOutputStream(archivoExterno)){
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        } finally{
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     public boolean horaIntrodValida(int horaIntrod) {
         horaDAO = new HoraDAO();
         String rutaFichero = "src//Ficheros//Hora.json";
