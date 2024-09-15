@@ -9,6 +9,8 @@ import InterfazGrafica.MenuPrincipal;
 import com.google.gson.Gson;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controlador {
 
@@ -206,6 +208,35 @@ public class Controlador {
         }
 
         return tareaConsultada;
+    }
+
+    public List<Tarea> todasLasTareas(){
+        List<Tarea> todasLasTareas = new ArrayList<Tarea>();
+        String rutaFicheroTarea = "src//Ficheros//Tarea.json";
+
+        tareaDAO.obtenerTodasLasTareas(rutaFicheroTarea);
+
+        try{
+            lector = new BufferedReader(new FileReader(rutaFicheroTarea));
+
+            StringBuilder contenidoFichero = new StringBuilder();
+            String lineaFichero;
+            while ((lineaFichero = lector.readLine()) != null) {
+                contenidoFichero.append(lineaFichero);
+            }
+
+            todasLasTareas = gson.fromJson(String.valueOf(contenidoFichero), List.class);
+        } catch(IOException e){
+            e.printStackTrace();
+        } finally {
+            try {
+                lector.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return todasLasTareas;
     }
 
 }
