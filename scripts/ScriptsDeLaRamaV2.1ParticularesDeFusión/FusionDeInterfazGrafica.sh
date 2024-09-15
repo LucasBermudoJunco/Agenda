@@ -5,7 +5,7 @@ echo
 echo "Cambio realizado a la rama Integracion"
 echo
 
-git git merge V2.1-InterfazGrafica
+git merge V2.1-InterfazGrafica
 
 echo
 echo "Fusión realizada de la rama Integracion con la rama InterfazGrafica"
