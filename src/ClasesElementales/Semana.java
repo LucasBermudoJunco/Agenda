@@ -48,13 +48,13 @@ public class Semana {
     }
 
 /// Método(s) específico(s)
-    public void obtenerHorasDeLaBaseDeDatos() {
-        horas = horaDAO.obtenerHoras();
-    }
+//    public void obtenerHorasDeLaBaseDeDatos() {
+//        horas = horaDAO.obtenerHoras();
+//    }
 
-    public void obtenerTareasDeLaBaseDeDatos() {
-        tareas = tareaDAO.obtenerTareas();
-    }
+//    public void obtenerTareasDeLaBaseDeDatos() {
+//        tareas = tareaDAO.obtenerTareas();
+//    }
 
 //    public Hora obtenerHora(int codigoHora) {
 //        return horaDAO.read(codigoHora);
@@ -135,11 +135,11 @@ public class Semana {
 //        tareaDAO.delete(codigoTareaAEliminar);
 //    }
 
-    public void eliminarLaTareaDeEstaHora(int codigoHora){
-        horaDAO.eliminarSuTarea(codigoHora);
-    }
+//    public void eliminarLaTareaDeEstaHora(int codigoHora){
+//        horaDAO.eliminarSuTarea(codigoHora);
+//    }
 
-    public void ordenarTareasPorHoras() {
-        Collections.sort(tareas);
-    }
+//    public void ordenarTareasPorHoras() {
+//        Collections.sort(tareas);
+//    }
 }
