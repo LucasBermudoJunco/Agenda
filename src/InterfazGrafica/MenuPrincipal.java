@@ -33,15 +33,15 @@ public class MenuPrincipal extends JFrame {
     /// Ejecución de la clase
     public static void main(String[] args) {
 
-//        // Creación de los archivos externos para leer y escribir sobre ellos
-//
-//        // Ruta de los archivos externos
-//        String rutaHoraJSON = "ArchivosLecturaYEscritura/Hora.json";
-//        String rutaTareaJSON = "ArchivosLecturaYEscritura/Tarea.json";
-//
-//        // Copiado de los archivos JSON desde el JAR a la ubicación externa
-//        Controlador.copiarArchivoDesdeJar("Hora.json", rutaHoraJSON);
-//        Controlador.copiarArchivoDesdeJar("Tarea.json", rutaTareaJSON);
+        // Creación de los archivos externos para leer y escribir sobre ellos
+
+        // Ruta de los archivos externos
+        String rutaHoraJSONParaJar = "ArchivosLecturaYEscritura/Hora.json";
+        String rutaTareaJSONParaJar = "ArchivosLecturaYEscritura/Tarea.json";
+
+        // Copiado de los archivos JSON desde el JAR a la ubicación externa
+        Controlador.copiarArchivoDesdeJar("Ficheros/Hora.json", rutaHoraJSONParaJar);
+        Controlador.copiarArchivoDesdeJar("Ficheros/Tarea.json", rutaTareaJSONParaJar);
 
         // Ejecución de la aplicación
         EventQueue.invokeLater(new Runnable() {
