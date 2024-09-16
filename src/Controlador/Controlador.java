@@ -61,7 +61,7 @@ public class Controlador {
 
     public boolean horaIntrodValida(int horaIntrod) {
         horaDAO = new HoraDAO();
-        String rutaFichero = "src//Ficheros//Hora.json";
+        String rutaFichero = "Ficheros//Hora.json";
 
         try {
             escritor = new BufferedWriter(new FileWriter(rutaFichero));
@@ -80,7 +80,7 @@ public class Controlador {
         horaDAO = new HoraDAO();
         Hora horaConsultada = null;
         gson = new Gson();
-        String rutaFichero = "src//Ficheros//Hora.json";
+        String rutaFichero = "Ficheros//Hora.json";
 
         // Escritura de la hora introducida en el fichero
         try{
@@ -121,7 +121,7 @@ public class Controlador {
 
     public void eliminarTareaDeEstaHora(int codigoTarea) {
         tareaDAO = new TareaDAO();
-        String fichero = "src//Ficheros//Tarea.json";
+        String fichero = "Ficheros//Tarea.json";
 
         // Escritura del fichero ´´Tarea.json``
         try{
@@ -147,7 +147,7 @@ public class Controlador {
     public void crearTarea(Tarea tareaIntrod){
         tareaDAO = new TareaDAO();
         gson = new Gson();
-        String fichero = "src//Ficheros//Tarea.json";
+        String fichero = "Ficheros//Tarea.json";
         String tareaEnString = gson.toJson(tareaIntrod);
 
         try{
@@ -167,7 +167,7 @@ public class Controlador {
         Tarea tareaConsultada = null;
         tareaDAO = new TareaDAO();
         gson = new Gson();
-        String rutaFichero = "src//Ficheros//Tarea.json";
+        String rutaFichero = "Ficheros//Tarea.json";
         boolean tieneTareaOExisteEstaTarea;
 
         // Escritura en ´´Tarea.json`` de la hora o del codigoTarea
@@ -214,7 +214,7 @@ public class Controlador {
 
     public List<Tarea> todasLasTareas(){
         List<Tarea> todasLasTareas = new ArrayList<Tarea>();
-        String rutaFicheroTarea = "src//Ficheros//Tarea.json";
+        String rutaFicheroTarea = "Ficheros//Tarea.json";
         tareaDAO = new TareaDAO();
         gson = new Gson();
 

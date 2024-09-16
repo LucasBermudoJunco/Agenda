@@ -28,4 +28,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 /Agenda.jar
-/ArchivosLecturaYEscritura/Hora.json
+/Ficheros/Hora.json
