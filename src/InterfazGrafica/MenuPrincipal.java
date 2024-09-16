@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -34,14 +35,18 @@ public class MenuPrincipal extends JFrame {
     public static void main(String[] args) {
 
         // Creación de los archivos externos para leer y escribir sobre ellos
+        File archivoHoraJSON = new File("Ficheros/Hora.json");
+        File archivoTareaJSON = new File("Ficheros/Tarea.json");
+        archivoHoraJSON.getParentFile().mkdirs();
+        archivoTareaJSON.getParentFile().mkdirs();
 
-        // Ruta de los archivos externos
-        String rutaHoraJSONParaJar = "ArchivosLecturaYEscritura/Hora.json";
-        String rutaTareaJSONParaJar = "ArchivosLecturaYEscritura/Tarea.json";
-
-        // Copiado de los archivos JSON desde el JAR a la ubicación externa
-        Controlador.copiarArchivoDesdeJar("Ficheros/Hora.json", rutaHoraJSONParaJar);
-        Controlador.copiarArchivoDesdeJar("Ficheros/Tarea.json", rutaTareaJSONParaJar);
+//        // Ruta de los archivos externos
+//        String rutaHoraJSONParaJar = "Ficheros/Hora.json";
+//        String rutaTareaJSONParaJar = "Ficheros/Tarea.json";
+//
+//        // Copiado de los archivos JSON desde el JAR a la ubicación externa
+//        Controlador.copiarArchivoDesdeJar("Ficheros/Hora.json", rutaHoraJSONParaJar);
+//        Controlador.copiarArchivoDesdeJar("Ficheros/Tarea.json", rutaTareaJSONParaJar);
 
         // Ejecución de la aplicación
         EventQueue.invokeLater(new Runnable() {
