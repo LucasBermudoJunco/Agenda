@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+// Vicente guapetón
+
 @SuppressWarnings("CallToPrintStackTrace")
 public class MenuPrincipal extends JFrame {
     
